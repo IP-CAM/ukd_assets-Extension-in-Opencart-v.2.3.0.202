@@ -92,8 +92,6 @@ var cur_ccn = 0;
 
 var selected_installment = '';
 
-
-
 $('.date').mask('dM/mM/YMMM', {
     'translation': {
         d: {
@@ -124,6 +122,10 @@ $('.date2').mask('mM/YMMM', {
         }
     }
 });
+
+function validate(){
+  return true;
+}
 
 var dt = new Date();
 

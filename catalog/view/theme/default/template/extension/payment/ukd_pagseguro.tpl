@@ -17,8 +17,10 @@
 
 <div class="buttons">
   <div class="pull-right">
-    <input data-toggle="modal" data-target="#processModal" type="button" value="<?php echo $button_confirm; ?>" id="button-confirm" class="btn btn-primary" data-loading-text="<?php echo $text_loading; ?>" />
+    <input type="button" value="<?php echo $button_confirm; ?>" id="button-confirm" class="btn btn-primary" data-loading-text="<?php echo $text_loading; ?>" />
   </div>
+  <input data-toggle="modal" data-target="#processModal" type="button" value="<?php echo $button_confirm; ?>" id="button-confirm" class="btn btn-primary" data-loading-text="<?php echo $text_loading; ?>" />
+</div>
 </div>
 
 <form id="form_pagseguro">
@@ -128,7 +130,8 @@ $i++;
 }
 ?>
 
-<input name="notificationURL" type="hidden" value="" />
+<!-- <input name="notificationURL" type="hidden" value="http://fredukita.comeze.com/index.php" /> -->
+<input name="redirectURL" type="hidden" value="http://fredukita.comeze.com/index.php" />
 <input name="reference" type="hidden" value="" />
 
 <input name="transactions" type="hidden" value="<?php echo $transactions ?>" />
@@ -142,6 +145,11 @@ var directpayment = '<?php echo $directpayment ?>';
 var amount = '<?php echo number_format( $total + $shipping_method['cost'], 2, '.', '' ) ?>';
 var pagseguro_method =  window.payment_method_form.pagseguro_method;
 
+//Override functions
+var validate = function(){};
+var startPayment = function(){};
+var onFinishPayment  = function(){};
+
 $('#button-confirm').attr('disabled', true);
 
 $('#processModal').modal({
@@ -154,18 +162,13 @@ $('#processModal').modal({
 
 $('#button-confirm').on('click', function() {
 
+  if(validate()){
+
     $('#processModal .modal-title').html('Processando pagamento...');
 
     $('#processModal .modal-body').html('<p><center><i class="fa fa-circle-o-notch fa-spin fa-3x fa-fw" style="font-size:64px;color:#ccc"></i></center></p>');
 
-    if (pagseguro_method == 'eft') {
-
-        if (!$('#form_pagseguro input[name=bankName]').val()) {
-            alert('Selecione um Banco!');
-            //return false;
-        }
-
-    }
+    $('#processModal').modal('show');
 
     $.ajax({
         type: 'get',
@@ -188,6 +191,7 @@ $('#button-confirm').on('click', function() {
             }
         }
     });
+  }
 });
 
 var cpf = $('#collapse-payment-address input[placeholder=CPF]').val()
@@ -302,11 +306,10 @@ function getPaymentMethodsCallback(res) {
 
     } else if (pagseguro_method == 'creditCard') {
 
-        var options = res['paymentMethods']['CREDIT_CARD']['options'];
+        window.options = res['paymentMethods']['CREDIT_CARD']['options'];
 
-        if (options) {
+        if (window.options) {
             $('#button-confirm').attr('disabled', false);
-            window.options = options;
             //init_cc();
         } else {
             alert('Pagamento via Cartão de Crédito está temporariamente indisponível.');
@@ -314,11 +317,10 @@ function getPaymentMethodsCallback(res) {
 
     } else if (pagseguro_method == 'eft') {
 
-        var options = res['paymentMethods']['ONLINE_DEBIT']['options'];
+        window.options = res['paymentMethods']['ONLINE_DEBIT']['options'];
 
-        if (options) {
+        if (window.options) {
             $('#button-confirm').attr('disabled', false);
-            window.options = options;
             init_eft();
         } else {
             alert('Pagamento via Débito Online está temporariamente indisponível.');
@@ -344,26 +346,21 @@ function process() {
         data: $("#form_pagseguro").serialize(),
         dataType: "json",
         cache: false,
-        success: function(resonse) {
+        success: function(res) {
 
-            if (resonse) {
-                //process = null;
-                if (resonse['paymentLink']) {
+            if (res) {
 
-                    console.log('paymentLink');
+                if (res['error']) {
 
-                }
-
-                if (resonse['error']) {
-
-                    console.log(resonse, 'error');
+                    console.log(res, 'error');
 
                     error = true;
 
-                    processError(resonse['error']);
+                    processError(res['error']);
 
                 } else {
-                    console.log('processed', resonse);
+                    console.log('processed...', res);
+                    onFinishPayment(res)
                 }
             } else {
                 process();

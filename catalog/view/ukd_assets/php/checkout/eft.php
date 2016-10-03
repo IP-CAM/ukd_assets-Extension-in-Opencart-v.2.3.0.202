@@ -54,7 +54,7 @@ $('#eft_options').html('<p><center><i class="fa fa-circle-o-notch fa-spin fa-3x 
 function init_eft(){
     var data = window.options;
 
-    $('#eft_options').empty().hide();
+    $('#eft_options').empty();
 
     for(i in data){
 
@@ -64,11 +64,11 @@ function init_eft(){
 
         var displayName =  data[i].displayName;
 
-        var img =  data[i].images.MEDIUM.path;
+        var img =  img_url + data[i].images.MEDIUM.path;
 
         var name =  data[i].name;
 
-        var content = '<div class="col-sm-6 funkyradio-primary funkyradio" title="' + displayName + '" ><input id=' + name + ' type="radio" name="bankname"  value="'+ name + '" /><label for="'+ name +'"><img class="bank-img" src="' + img_url + img + '" /><span class="xs-span ">'+ displayName +'</span></label></div>';
+        var content = '<div class="col-sm-6 funkyradio-primary funkyradio" title="' + displayName + '" ><input id=' + name + ' type="radio" name="bankname"  value="'+ name + '" /><label for="'+ name +'"><img class="bank-img" src="' + img + '" /><span class="xs-span ">'+ displayName +'</span></label></div>';
 
         $('#eft_options').append(content);
 
@@ -82,7 +82,30 @@ function init_eft(){
 
     });
 
-    $('#eft_options').show();
+
+}
+
+function startPayment() {
+
+  process();
+}
+
+function validate(){
+
+    if (!$('#form_pagseguro input[name=bankName]').val()) {
+        alert('Selecione um Banco!');
+        return false;
+    }
+
+    return true;
+
+}
+
+function onFinishPayment(res){
+
+  var win = window.open(res['paymentLink'], '_blank');
+  if(win)win.focus();
+
 }
 
 </script>
