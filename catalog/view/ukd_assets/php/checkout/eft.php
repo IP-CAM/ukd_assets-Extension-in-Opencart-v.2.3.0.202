@@ -47,41 +47,42 @@ require_once '../security.php';
   </div>
 </div>
 <br />
-<?php
-$jsonString = json_encode( $_REQUEST['jsonString'] );
-?>
-
 <script>
-// name: "HSBC", displayName: "Banco HSBC", status: "AVAILABLE", code: 307, images: Object ['MEDIUM':{path:x, size:x},'SMALL':{path:x, size:x}]
 
-var data = JSON.parse(<?php echo $jsonString ?>);
+$('#eft_options').html('<p><center><i class="fa fa-circle-o-notch fa-spin fa-3x fa-fw" style="font-size:48px;color:#ccc"></i></center></p>');
 
-//console.log(data);
+function init_eft(){
+    var data = window.options;
 
-for(i in data){
+    $('#eft_options').empty().hide();
 
-  if(data[i].status == 'AVAILABLE'){
+    for(i in data){
 
-    //console.log(data[i].displayName);
+      if(data[i].status == 'AVAILABLE'){
 
-    var displayName =  data[i].displayName;
+        //console.log(data[i].displayName);
 
-    var img =  data[i].images.MEDIUM.path;
+        var displayName =  data[i].displayName;
 
-    var name =  data[i].name;
+        var img =  data[i].images.MEDIUM.path;
 
-    var content = '<div class="col-sm-6 funkyradio-primary funkyradio" title="' + displayName + '" ><input id=' + name + ' type="radio" name="bankname"  value="'+ name + '" /><label for="'+ name +'"><img class="bank-img" src="' + img_url + img + '" /><span class="xs-span ">'+ displayName +'</span></label></div>';
+        var name =  data[i].name;
 
-    $('#eft_options').append(content);
+        var content = '<div class="col-sm-6 funkyradio-primary funkyradio" title="' + displayName + '" ><input id=' + name + ' type="radio" name="bankname"  value="'+ name + '" /><label for="'+ name +'"><img class="bank-img" src="' + img_url + img + '" /><span class="xs-span ">'+ displayName +'</span></label></div>';
 
-  }
+        $('#eft_options').append(content);
 
+      }
+
+    }
+
+    $('#collapse-checkout-confirm input[name=bankname]').click(function(event) {
+
+      $('#form_pagseguro input[name=bankName]').val($(this).val());
+
+    });
+
+    $('#eft_options').show();
 }
-
-$('#collapse-checkout-confirm input[name=bankname]').click(function(event) {
-
-  $('#form_pagseguro input[name=bankName]').val($(this).val());
-
-});
 
 </script>

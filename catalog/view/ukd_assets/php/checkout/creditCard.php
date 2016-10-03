@@ -92,84 +92,80 @@ var cur_ccn = 0;
 
 var selected_installment = '';
 
-init();
 
-function init() {
 
-    $('.date').mask('dM/mM/YMMM', {
-        'translation': {
-            d: {
-                pattern: /[0-3]/
-            },
-            m: {
-                pattern: /[0-1]/
-            },
-            M: {
-                pattern: /[0-9]/
-            },
-            Y: {
-                pattern: /[1-2]/
-            }
+$('.date').mask('dM/mM/YMMM', {
+    'translation': {
+        d: {
+            pattern: /[0-3]/
+        },
+        m: {
+            pattern: /[0-1]/
+        },
+        M: {
+            pattern: /[0-9]/
+        },
+        Y: {
+            pattern: /[1-2]/
         }
-    });
+    }
+});
 
-    $('.date2').mask('mM/YMMM', {
-        'translation': {
-            m: {
-                pattern: /[0-1]/
-            },
-            M: {
-                pattern: /[0-9]/
-            },
-            Y: {
-                pattern: /[1-2]/
-            }
+$('.date2').mask('mM/YMMM', {
+    'translation': {
+        m: {
+            pattern: /[0-1]/
+        },
+        M: {
+            pattern: /[0-9]/
+        },
+        Y: {
+            pattern: /[1-2]/
         }
-    });
+    }
+});
 
-    var dt = new Date();
+var dt = new Date();
 
-    $('#cc_form input[name=birthDate]').datetimepicker({
-        format: 'DD/MM/YYYY',
-        maxDate: new Date(dt.setYear(dt.getYear() - 18)),
-        defaultDate: dt,
-        pickTime: false,
-        locale: 'br'
-    });
+$('#cc_form input[name=birthDate]').datetimepicker({
+    format: 'DD/MM/YYYY',
+    maxDate: new Date(dt.setYear(dt.getYear() - 18)),
+    defaultDate: dt,
+    pickTime: false,
+    locale: 'br'
+});
 
-    dt = new Date();
+dt = new Date();
 
-    $('#cc_form input[name=cardExpiry]').datetimepicker({
-        format: 'MM/YYYY',
-        minDate: new Date(dt.setMonth(dt.getMonth() + 1)),
-        defaultDate: dt,
-        startView: "months",
-        minViewMode: "months",
-        pickTime: false,
-        locale: 'br'
-    });
+$('#cc_form input[name=cardExpiry]').datetimepicker({
+    format: 'MM/YYYY',
+    minDate: new Date(dt.setMonth(dt.getMonth() + 1)),
+    defaultDate: dt,
+    startView: "months",
+    minViewMode: "months",
+    pickTime: false,
+    locale: 'br'
+});
 
-    $('#cc_form input[readonly]').css('background-color', '#fff');
+$('#cc_form input[readonly]').css('background-color', '#fff');
 
-    $("#cc_form input[name=cardNumber]").keyup(function(e) {
+$("#cc_form input[name=cardNumber]").keyup(function(e) {
 
-        var cc = $(this).val().replace(/ /g, '');
-        var len = cc.length;
+    var cc = $(this).val().replace(/ /g, '');
+    var len = cc.length;
 
-        if (len == 6 || len > 12) {
-            getCardBrand(cc);
-        } else if (len < 6) {
-            $('#card_label').show();
-            $('#card_brand').hide();
-            removeInstallments();
-            $('#cc_form input[name=cardCVC]').attr('maxlength', 3).val('');
-        }
+    if (len == 6 || len > 12) {
+        getCardBrand(cc);
+    } else if (len < 6) {
+        $('#card_label').show();
+        $('#card_brand').hide();
+        removeInstallments();
+        $('#cc_form input[name=cardCVC]').attr('maxlength', 3).val('');
+    }
 
-    }).click(function(event) {
-        $(this).attr('maxlength', 19);
-    });
-
-}
+}).click(function(event) {
+    $(this).attr('maxlength', 19);
+});
 
 function getCardBrand(val) {
 

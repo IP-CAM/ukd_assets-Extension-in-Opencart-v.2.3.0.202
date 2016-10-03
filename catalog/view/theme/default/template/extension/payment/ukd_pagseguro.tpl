@@ -137,8 +137,6 @@ $i++;
 
 <script type="text/javascript">
 
-getSessionId();
-
 var img_url = '<?php echo $img_url ?>';
 var directpayment = '<?php echo $directpayment ?>';
 var amount = '<?php echo number_format( $total + $shipping_method['cost'], 2, '.', '' ) ?>';
@@ -158,7 +156,7 @@ $('#button-confirm').on('click', function() {
 
     $('#processModal .modal-title').html('Processando pagamento...');
 
-    $('#processModal .modal-body').html('<p><center><i class="fa fa-circle-o-notch fa-spin fa-3x fa-fw" style="font-size:64px;color:grey"></i></center></p>');
+    $('#processModal .modal-body').html('<p><center><i class="fa fa-circle-o-notch fa-spin fa-3x fa-fw" style="font-size:64px;color:#ccc"></i></center></p>');
 
     if (pagseguro_method == 'eft') {
 
@@ -215,6 +213,7 @@ $('#div_content').html('<p><center><i class="fa fa-circle-o-notch fa-spin fa-3x 
 $.get('catalog/view/ukd_assets/php/checkout/' + pagseguro_method + '.php')
     .done(function(data) {
         $('#div_content').html(data);
+        getSessionId();
     });
 
 var error_count = 0;
@@ -288,6 +287,7 @@ function getPaymentMethods(sessionId) {
 
 }
 
+
 function getPaymentMethodsCallback(res) {
 
     //console.log(res);
@@ -307,6 +307,7 @@ function getPaymentMethodsCallback(res) {
         if (options) {
             $('#button-confirm').attr('disabled', false);
             window.options = options;
+            //init_cc();
         } else {
             alert('Pagamento via Cartão de Crédito está temporariamente indisponível.');
         }
@@ -318,6 +319,7 @@ function getPaymentMethodsCallback(res) {
         if (options) {
             $('#button-confirm').attr('disabled', false);
             window.options = options;
+            init_eft();
         } else {
             alert('Pagamento via Débito Online está temporariamente indisponível.');
         }
