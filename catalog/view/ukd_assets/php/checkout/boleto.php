@@ -10,8 +10,7 @@ function startPayment() {
   process();
 }
 function onFinishPayment(res){
-  var url = res['paymentLink'];
-window.open(url, '_blank');
+
 }
 
 </script>

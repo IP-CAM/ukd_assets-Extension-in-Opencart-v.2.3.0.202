@@ -88,9 +88,40 @@ var card_img = '';
 
 var ccdata = [];
 
-var cur_ccn = 0;
-
 var selected_installment = '';
+
+function validate(){
+
+  var error = '';
+
+  var dt = new Date();
+
+  dt = new Date(dt.setYear(dt.getYear() - 18));
+
+  var b = $('#cc_form input[name=birthDate]').val().split('/');
+  if(!b[0] || !b[1] || !b[2]){
+      error = 'birthDate invalido';
+  }
+  else if(b[0] > 31){
+      error = 'dia invalido';
+  }
+  else if(b[1] > dt.getMonth() + 1){
+      error = 'mes invalido';
+  }
+  else if(b[1] == dt.getMonth() + 1 && b[0] > dt.getDate() && b[2] >= dt.getFullYear() ){
+      error = 'dia2 invalido';
+  }
+  else if( b[2] > dt.getFullYear() || b[2] < new Date().getFullYear() - 100){
+      error = 'ano invalido';
+  }
+
+  if(error){
+    alert(error);
+    return false;
+  }
+
+  return true;
+}
 
 $('.date').mask('dM/mM/YMMM', {
     'translation': {
@@ -122,10 +153,6 @@ $('.date2').mask('mM/YMMM', {
         }
     }
 });
-
-function validate(){
-  return true;
-}
 
 var dt = new Date();
 

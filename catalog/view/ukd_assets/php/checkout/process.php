@@ -1,6 +1,6 @@
 <?php
 
-$url = $_POST['transactions'];
+$url = $_GET['url'];
 
 function sanitizeString($str)
 {

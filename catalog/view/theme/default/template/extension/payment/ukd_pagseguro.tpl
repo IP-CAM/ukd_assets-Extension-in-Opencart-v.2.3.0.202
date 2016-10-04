@@ -95,7 +95,6 @@ if(!$shipping_method){
   $shipping_method['cost'] = '00.00';
   $shipping_method['title'] = 'n/a';
 
-
 }
 
 $shipping_cost = number_format(str_replace( ',', '.', $shipping_method['cost'] ), 2, '.', '');
@@ -134,21 +133,23 @@ $i++;
 <input name="redirectURL" type="hidden" value="http://fredukita.comeze.com/index.php" />
 <input name="reference" type="hidden" value="" />
 
-<input name="transactions" type="hidden" value="<?php echo $transactions ?>" />
-
 </form>
 
 <script type="text/javascript">
 
+console.log('<?php echo $continue; ?>');
+
 var img_url = '<?php echo $img_url ?>';
+var transactions_url = '<?php echo $transactions ?>';
+//var location = '<?php echo $continue; ?>';
 var directpayment = '<?php echo $directpayment ?>';
 var amount = '<?php echo number_format( $total + $shipping_method['cost'], 2, '.', '' ) ?>';
 var pagseguro_method =  window.payment_method_form.pagseguro_method;
 
 //Override functions
-var validate = function(){};
-var startPayment = function(){};
-var onFinishPayment  = function(){};
+var validate = function() {};
+var startPayment = function() {};
+var onFinishPayment = function() {};
 
 $('#button-confirm').attr('disabled', true);
 
@@ -156,42 +157,42 @@ $('#processModal').modal({
     backdrop: 'static',
     keyboard: true,
     show: false
-}).on('hidden.bs.modal', function () {
+}).on('hidden.bs.modal', function() {
     $('#processModal .modal-footer').hide();
 })
 
 $('#button-confirm').on('click', function() {
 
-  if(validate()){
+    if (validate()) {
 
-    $('#processModal .modal-title').html('Processando pagamento...');
+        $('#processModal .modal-title').html('Processando pagamento...');
 
-    $('#processModal .modal-body').html('<p><center><i class="fa fa-circle-o-notch fa-spin fa-3x fa-fw" style="font-size:64px;color:#ccc"></i></center></p>');
+        $('#processModal .modal-body').html('<p><center><i class="fa fa-circle-o-notch fa-spin fa-3x fa-fw" style="font-size:64px;color:#ccc"></i></center></p>');
 
-    $('#processModal').modal('show');
+        $('#processModal').modal('show');
 
-    $.ajax({
-        type: 'get',
-        url: 'index.php?route=extension/payment/ukd_pagseguro/confirm',
-        cache: false,
-        beforeSend: function() {
-            $('#button-confirm').button('loading');
-        },
-        complete: function(res) {
-            //$('#button-confirm').button('reset');
-        },
-        success: function() {
-            //location = '<?php //echo $continue; ?>';
-            //process();
-            startPayment();
-        },
-        error: function() {
-            for (i in res) {
-                //console.log(res[i], i);
+        $.ajax({
+            type: 'get',
+            url: 'index.php?route=extension/payment/ukd_pagseguro/confirm',
+            cache: false,
+            beforeSend: function() {
+                $('#button-confirm').button('loading');
+            },
+            complete: function(res) {
+                //$('#button-confirm').button('reset');
+            },
+            success: function() {
+                //location = '<?php //echo $continue; ?>';
+                //process();
+                startPayment();
+            },
+            error: function() {
+                for (i in res) {
+                    console.log(res[i], i, 'error confirm');
+                }
             }
-        }
-    });
-  }
+        });
+    }
 });
 
 var cpf = $('#collapse-payment-address input[placeholder=CPF]').val()
@@ -252,11 +253,7 @@ function getSessionId() {
 
                 getPaymentMethods(res.sessionId);
 
-                //setTimeout(getSessionId, 120000);
-
                 error_count = 0;
-
-                //console.log('my id:', res.sessionId);
 
             }
 
@@ -342,7 +339,7 @@ function process() {
 
     $.ajax({
         type: "POST",
-        url: "catalog/view/ukd_assets/php/checkout/process.php",
+        url: "catalog/view/ukd_assets/php/checkout/process.php?url=" + transactions_url,
         data: $("#form_pagseguro").serialize(),
         dataType: "json",
         cache: false,
@@ -370,7 +367,6 @@ function process() {
         error: function(jqxhr) {
 
             alert(jqxhr.resonseText);
-
 
         },
         complete: function() {
@@ -402,7 +398,6 @@ function processError(error) {
 
     } else {
         if (error[0]) {
-
             for (i in error) {
 
                 content += error[i]['code'] + ' - ' + error[i]['message'] + '<br />';
@@ -411,7 +406,6 @@ function processError(error) {
 
             }
         }
-
     }
 
     if (content == '') {
@@ -421,7 +415,6 @@ function processError(error) {
             content += i + ' - ' + error[i] + '<br />';
 
             filterError(i);
-
 
         }
 
@@ -457,7 +450,7 @@ function filterError(code) {
     if (code == 53047 || code == 53048) {
         $('#cc_form input[name=birthDate]').parent('.form-group').addClass('has-error');
     }
-    if (code == 10002 ||code == 30405) {
+    if (code == 10002 || code == 30405) {
         $('#cc_form input[name=cardExpiry]').parent('.form-group').addClass('has-error');
     }
     if (code == 30400) {
