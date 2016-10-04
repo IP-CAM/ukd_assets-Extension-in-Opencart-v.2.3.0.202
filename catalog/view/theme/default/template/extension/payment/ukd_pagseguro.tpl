@@ -288,7 +288,6 @@ function getPaymentMethods(sessionId) {
 
 }
 
-
 function getPaymentMethodsCallback(res) {
 
     //console.log(res);
@@ -459,6 +458,18 @@ function filterError(code) {
 
     console.log(code, 'filterError');
 
+}
+
+function errorAlert(content){
+
+  $('#processModal .modal-title').html('Mensagem de erro');
+
+  $('#processModal .modal-footer').show();
+
+  $('#processModal .modal-body').html('<span style="text-transform: uppercase">' + content + '</span>');
+
+  $('#processModal').modal('show');
+  
 }
 
 </script>

@@ -79,7 +79,7 @@ require_once '../security.php';
 <div class="col-sm-6 col-md-7">
   DIV
 </div>
-<br />
+
 <script>
 
 window.options = [];
@@ -87,72 +87,109 @@ window.options = [];
 var card_img = '';
 
 var ccdata = [];
+ccdata['numberSize'] = 13;
+ccdata['cvvSize'] = 3;
 
 var selected_installment = '';
 
-function validate(){
+function validate() {
 
-  var error = '';
+    $('#cc_form .form-group').removeClass('has-error');
+    $('#cc_form .input-group').removeClass('has-error');
 
-  var dt = new Date();
+    var error = [];
 
-  dt = new Date(dt.setYear(dt.getYear() - 18));
+    var cardOwner = $('#cc_form input[name=cardOwner]').val();
 
-  var b = $('#cc_form input[name=birthDate]').val().split('/');
-  if(!b[0] || !b[1] || !b[2]){
-      error = 'birthDate invalido';
-  }
-  else if(b[0] > 31){
-      error = 'dia invalido';
-  }
-  else if(b[1] > dt.getMonth() + 1){
-      error = 'mes invalido';
-  }
-  else if(b[1] == dt.getMonth() + 1 && b[0] > dt.getDate() && b[2] >= dt.getFullYear() ){
-      error = 'dia2 invalido';
-  }
-  else if( b[2] > dt.getFullYear() || b[2] < new Date().getFullYear() - 100){
-      error = 'ano invalido';
-  }
+    if (cardOwner.length < 5) {
+        error['cardOwner'] = 'Nome do titular deve ter no mínimo ' + 5 + ' digitos';
+    }
+    else if (cardOwner.indexOf(' ') == -1) {
+        error['cardOwner'] = 'Nome do titular incompleto';
+    }
 
-  if(error){
-    alert(error);
-    return false;
-  }
+    var cpf = $('#cc_form input[name=cpf]').val();
 
-  return true;
+    if (cpf.length < 11) {
+        error['cpf'] = 'Número do CPF deve ter 11 digitos';
+    }else if(!validaCPF(cpf)){
+        error['cpf'] = 'CPF inválido';
+    }
+
+    var dt = new Date();
+
+    dt = new Date(dt.setYear(dt.getYear() - 18));
+
+    var el = $('#cc_form input[name=birthDate]');
+
+    var b = el.val().split('/');
+
+    if (!b[0] || !b[1] || !b[2]) {
+        error['birthDate'] = 'Preencha o campo <i>data de nascimento</i>';
+    } else if (b[0] > 31) {
+        error['birthDate'] = 'Dia de nascimento inválido';
+    } else if (b[1] > 12) {
+        error['birthDate'] = 'Mês de nascimento inválido';
+    } else if (b[2] == dt.getFullYear() && b[1] > dt.getMonth() + 1) {
+        error['birthDate'] = 'Mês de nascimento inválido';
+    } else if (b[1] == dt.getMonth() + 1 && b[0] > dt.getDate() && b[2] >= dt.getFullYear()) {
+        error['birthDate'] = 'É necessário ser maior de idade (18+)';
+    } else if (b[2] > dt.getFullYear()) {
+        error['birthDate'] = 'É necessário ser maior de idade (18+)';
+    } else if (b[2] < new Date().getFullYear() - 100) {
+        error['birthDate'] = 'Data de nascimento inválida';
+    }
+
+    dt = new Date();
+
+    el = $('#cc_form input[name=cardExpiry]');
+
+    var e = el.val().split('/');
+
+    if (!e[0] || !e[1]) {
+        error['cardExpiry'] = 'Preencha o campo <i>data expiração</i>';
+    } else if (e[0] > 12) {
+        error['cardExpiry'] = 'Data de expiração inválida';
+    } else if (e[1] < dt.getFullYear()) {
+        error['cardExpiry'] = 'Data de expiração inválida';
+    } else if (e[1] == dt.getFullYear() && e[0] < dt.getMonth() + 1) {
+        error['cardExpiry'] = 'Data de expiração inválida';
+    }
+
+    var numberSize = $('#cc_form input[name=cardNumber]').val();
+
+    if (numberSize.length < ccdata['numberSize']) {
+        error['cardNumber'] = 'Número do cartão deve ter no mínimo ' + ccdata['numberSize'] + ' digitos';
+    }
+
+    var cvvSize = $('#cc_form input[name=cardCVC]').val();
+
+    if (cvvSize.length < ccdata['cvvSize']) {
+        error['cardCVC'] = 'Número de segurança deve ter no mínimo ' + ccdata['cvvSize'] + ' digitos';
+    }
+
+    var installments = $('#cc_form select[name=installments]').val();
+
+    if (installments == 0 && ccdata['name']) {
+        error['installments'] = 'Selecione o número de parcelas';
+    }
+
+    var content = '';
+
+    for (i in error) {
+        console.log(error, error[i]);
+        content += error[i] + '.<br />';
+        $('#cc_form *[name=' + i + ']').parent().addClass('has-error');
+
+    }
+
+    if (content) {
+        errorAlert(content);
+        return false;
+    }
+
+    return true;
 }
-
-$('.date').mask('dM/mM/YMMM', {
-    'translation': {
-        d: {
-            pattern: /[0-3]/
-        },
-        m: {
-            pattern: /[0-1]/
-        },
-        M: {
-            pattern: /[0-9]/
-        },
-        Y: {
-            pattern: /[1-2]/
-        }
-    }
-});
-
-$('.date2').mask('mM/YMMM', {
-    'translation': {
-        m: {
-            pattern: /[0-1]/
-        },
-        M: {
-            pattern: /[0-9]/
-        },
-        Y: {
-            pattern: /[1-2]/
-        }
-    }
-});
 
 var dt = new Date();
 
@@ -168,7 +205,7 @@ dt = new Date();
 
 $('#cc_form input[name=cardExpiry]').datetimepicker({
     format: 'MM/YYYY',
-    minDate: new Date(dt.setMonth(dt.getMonth() + 1)),
+    minDate: new Date(dt.setMonth(dt.getMonth())),
     defaultDate: dt,
     startView: "months",
     minViewMode: "months",
@@ -198,6 +235,8 @@ $("#cc_form input[name=cardNumber]").keyup(function(e) {
 
 function getCardBrand(val) {
 
+    ccdata['name'] = ''
+
     PagSeguroDirectPayment.getBrand({
         cardBin: val,
         error: function(res) {
@@ -224,6 +263,10 @@ function getCardBrandCallback(res) {
     card_img = window.options[ccdata['name'].toUpperCase()]['images']['SMALL']['path'];
 
     var max = Math.max.apply(null, res.brand.config.acceptedLengths);
+
+    var min = Math.min.apply(null, res.brand.config.acceptedLengths);
+
+    ccdata['numberSize'] = min;
 
     var val = $('#cc_form input[name=cardNumber]').val();
 
