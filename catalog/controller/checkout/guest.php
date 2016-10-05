@@ -193,6 +193,9 @@ class ControllerCheckoutGuest extends Controller {
 		}
 
 		if (!$json) {
+
+			require 'catalog/view/ukd_assets/php/checkout/field-validation.ctrl.php'; //ukd
+
 			if ((utf8_strlen(trim($this->request->post['firstname'])) < 1) || (utf8_strlen(trim($this->request->post['firstname'])) > 32)) {
 				$json['error']['firstname'] = $this->language->get('error_firstname');
 			}
@@ -212,8 +215,6 @@ class ControllerCheckoutGuest extends Controller {
 			if ((utf8_strlen(trim($this->request->post['address_1'])) < 3) || (utf8_strlen(trim($this->request->post['address_1'])) > 128)) {
 				$json['error']['address_1'] = $this->language->get('error_address_1');
 			}
-
-			require 'catalog/view/ukd_assets/php/checkout/guest.field-validation.ctrl.php'; //ukd
 
 			if ((utf8_strlen(trim($this->request->post['city'])) < 2) || (utf8_strlen(trim($this->request->post['city'])) > 128)) {
 				$json['error']['city'] = $this->language->get('error_city');

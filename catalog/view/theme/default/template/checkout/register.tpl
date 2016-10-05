@@ -34,7 +34,7 @@
       </div>
       <div class="form-group required">
         <label class="control-label" for="input-payment-telephone"><?php echo $entry_telephone; ?></label>
-        <input type="text" name="telephone" value="" placeholder="<?php echo $entry_telephone; ?>" id="input-payment-telephone" class="form-control" />
+        <input type="text" name="telephone" value="" placeholder="<?php echo $entry_telephone; ?>" id="input-payment-telephone" class="form-control phone_mask" />
       </div>
       <div class="form-group">
         <label class="control-label" for="input-payment-fax"><?php echo $entry_fax; ?></label>
@@ -149,6 +149,10 @@
   <div class="col-sm-6">
     <fieldset id="address">
       <legend><?php echo $text_your_address; ?></legend>
+      <div class="form-group required">
+        <label class="control-label" for="input-payment-postcode"><?php echo $entry_postcode; ?></label>
+        <input type="text" name="postcode" value="<?php echo $postcode; ?>" placeholder="<?php echo $entry_postcode; ?>" id="input-payment-postcode" class="form-control postcode_mask" />
+      </div>
       <div class="form-group">
         <label class="control-label" for="input-payment-company"><?php echo $entry_company; ?></label>
         <input type="text" name="company" value="" placeholder="<?php echo $entry_company; ?>" id="input-payment-company" class="form-control" />
@@ -165,27 +169,15 @@
         <label class="control-label" for="input-payment-city"><?php echo $entry_city; ?></label>
         <input type="text" name="city" value="" placeholder="<?php echo $entry_city; ?>" id="input-payment-city" class="form-control" />
       </div>
-      <div class="form-group required">
-        <label class="control-label" for="input-payment-postcode"><?php echo $entry_postcode; ?></label>
-        <input type="text" name="postcode" value="<?php echo $postcode; ?>" placeholder="<?php echo $entry_postcode; ?>" id="input-payment-postcode" class="form-control" />
-      </div>
-      <div class="form-group required">
+      <div class="form-group required hidden">
         <label class="control-label" for="input-payment-country"><?php echo $entry_country; ?></label>
         <select name="country_id" id="input-payment-country" class="form-control">
-          <option value=""><?php echo $text_select; ?></option>
-          <?php foreach ($countries as $country) { ?>
-          <?php if ($country['country_id'] == $country_id) { ?>
-          <option value="<?php echo $country['country_id']; ?>" selected="selected"><?php echo $country['name']; ?></option>
-          <?php } else { ?>
-          <option value="<?php echo $country['country_id']; ?>"><?php echo $country['name']; ?></option>
-          <?php } ?>
-          <?php } ?>
+          <option value="30" selected="selected">Brasil</option>
         </select>
       </div>
       <div class="form-group required">
         <label class="control-label" for="input-payment-zone"><?php echo $entry_zone; ?></label>
-        <select name="zone_id" id="input-payment-zone" class="form-control">
-        </select>
+        <?php include 'catalog/view/ukd_assets/html/zone_id.html' ?>
       </div>
       <?php foreach ($custom_fields as $custom_field) { ?>
       <?php if ($custom_field['location'] == 'address') { ?>
@@ -483,7 +475,13 @@ $('#collapse-payment-address select[name=\'country_id\']').on('change', function
 	});
 });
 
-$('#collapse-payment-address select[name=\'country_id\']').trigger('change');
+//$('#collapse-payment-address select[name=\'country_id\']').trigger('change');
 
-
+//ukd
+<?php
+$form_name = 'register_form' ;
+$collapse_name = '#collapse-payment-address' ;
+$button_name = '#button-register' ;
+include_once 'catalog/view/ukd_assets/php/js/address_autofill.inc.php';
+?>
 //--></script>

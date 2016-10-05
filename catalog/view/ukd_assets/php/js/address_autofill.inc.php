@@ -1,3 +1,10 @@
+/*  Load Mask Lib */
+require(["mask"], function() {
+  $('.phone_mask').mask('(00) 000000000', {placeholder: "(DDD) Número do telefone"});
+  $('.postcode_mask').mask('00000000', {placeholder: "Somente números. Ex.: 42850000"});
+})
+
+
 function save() {
     $('<?php echo $collapse_name ?> input').each(function(index, el) {
         window.
@@ -6,7 +13,7 @@ function save() {
     $('<?php echo $collapse_name ?> select').each(function(index, el) {
         window.
         <?php echo $form_name ?>.select[$(this).attr('name')] = $(this).find('option:selected').val();
-        console.log($(this).find('option:selected').val(), '---------');
+        //console.log($(this).find('option:selected').val(), '---------');
     });
 }
 
@@ -24,7 +31,7 @@ function load() {
     if (window.<?php echo $form_name ?>.select) {
 
         for (i in window.<?php echo $form_name ?>.select) {
-            console.log(i, window.<?php echo $form_name ?>.select[i]);
+          //  console.log(i, window.<?php echo $form_name ?>.select[i]);
             if (i != 'country_id') {
                 $('<?php echo $collapse_name ?> select[name=' + i + ']').attr('disabled', false).find('option[value=' + window.
                     <?php echo $form_name ?>.select[i] + ']').prop('selected', true);
@@ -66,8 +73,8 @@ window.<?php echo $form_name ?>.restoreAddressFields = function(el, init) {
             beforeSend: function(resp) {
                 $('<?php echo $collapse_name ?> input[name=\'address_1\']').attr('disabled', true);
                 $('<?php echo $collapse_name ?> input[name=\'address_2\']').attr('disabled', true);
-                $('<?php echo $collapse_name ?> input[name=\'city\']').attr('disabled', true);
-                $('<?php echo $collapse_name ?> input[name=\'zone_id\']').attr('disabled', true);
+                $('<?php echo $collapse_name ?> input[name=\'city\']').attr('readonly', true);
+                $('<?php echo $collapse_name ?> select[name=\'zone_id\']').attr('readonly', true);
             },
             success: function(json) {
 
@@ -81,15 +88,15 @@ window.<?php echo $form_name ?>.restoreAddressFields = function(el, init) {
                 }
 
                 if (json['localidade']) {
-                    $('<?php echo $collapse_name ?> input[name=\'city\']').val(json['localidade']).attr('disabled', true);
+                    $('<?php echo $collapse_name ?> input[name=\'city\']').val(json['localidade']).attr('readonly', true);
                 } else {
-                    $('<?php echo $collapse_name ?> input[name=\'city\']').attr('disabled', false);
+                    $('<?php echo $collapse_name ?> input[name=\'city\']').attr('readonly', false);
                 }
 
                 if (json['uf']) {
-                    $('<?php echo $collapse_name ?> select[name=\'zone_id\']').attr('disabled', true).find('option[data-sigla=' + json['uf'] + ']').prop('selected', true);
+                    $('<?php echo $collapse_name ?> select[name=\'zone_id\']').attr('readonly', true).find('option[data-sigla=' + json['uf'] + ']').prop('selected', true);
                 } else {
-                    $('<?php echo $collapse_name ?> select[name=\'zone_id\']').attr('disabled', false);
+                    $('<?php echo $collapse_name ?> select[name=\'zone_id\']').attr('readonly', false);
                 }
 
             },
@@ -103,16 +110,16 @@ window.<?php echo $form_name ?>.restoreAddressFields = function(el, init) {
                 //alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
                 $('<?php echo $collapse_name ?> input[name=\'address_1\']').attr('disabled', false);
                 $('<?php echo $collapse_name ?> input[name=\'address_2\']').attr('disabled', false);
-                $('<?php echo $collapse_name ?> input[name=\'city\']').attr('disabled', false);
-                $('<?php echo $collapse_name ?> input[name=\'zone_id\']').attr('disabled', false)
+                $('<?php echo $collapse_name ?> input[name=\'city\']').attr('readonly', false);
+                $('<?php echo $collapse_name ?> select[name=\'zone_id\']').attr('readonly', false)
                     //load();
             }
         })
     } else {
         // $('<?php echo $collapse_name ?> input[name=\'address_1\']').val('');
         // $('<?php echo $collapse_name ?> input[name=\'address_2\']').val('');
-        $('<?php echo $collapse_name ?> input[name=\'city\']').val('').attr('disabled', false);
-        $('<?php echo $collapse_name ?> select[name=\'zone_id\']').attr('disabled', false).find('option[data-sigla=none]').prop('selected', true);
+        $('<?php echo $collapse_name ?> input[name=\'city\']').val('').attr('readonly', false);
+        $('<?php echo $collapse_name ?> select[name=\'zone_id\']').attr('readonly', false).find('option[data-sigla=none]').prop('selected', true);
     }
 }
 

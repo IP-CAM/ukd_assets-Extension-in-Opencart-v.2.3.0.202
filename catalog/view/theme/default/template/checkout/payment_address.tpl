@@ -23,7 +23,8 @@
   </div>
   <?php } ?>
   <br />
-  <div id="payment-new" style="display: <?php echo ($addresses ? 'none' : 'block'); ?>;">
+  <!-- <div id="payment-new" style="display: <?php echo ($addresses ? 'none' : 'block'); ?>;"> -->
+    <div id="payment-new">
     <div class="form-group required">
       <label class="col-sm-2 control-label" for="input-payment-firstname"><?php echo $entry_firstname; ?></label>
       <div class="col-sm-10">
@@ -34,6 +35,12 @@
       <label class="col-sm-2 control-label" for="input-payment-lastname"><?php echo $entry_lastname; ?></label>
       <div class="col-sm-10">
         <input type="text" name="lastname" value="" placeholder="<?php echo $entry_lastname; ?>" id="input-payment-lastname" class="form-control" />
+      </div>
+    </div>
+    <div class="form-group required">
+      <label class="col-sm-2 control-label" for="input-payment-postcode"><?php echo $entry_postcode; ?></label>
+      <div class="col-sm-10">
+        <input type="text" name="postcode" value="" placeholder="<?php echo $entry_postcode; ?>" id="input-payment-postcode" class="form-control" />
       </div>
     </div>
     <div class="form-group">
@@ -60,34 +67,19 @@
         <input type="text" name="city" value="" placeholder="<?php echo $entry_city; ?>" id="input-payment-city" class="form-control" />
       </div>
     </div>
-    <div class="form-group required">
-      <label class="col-sm-2 control-label" for="input-payment-postcode"><?php echo $entry_postcode; ?></label>
-      <div class="col-sm-10">
-        <input type="text" name="postcode" value="" placeholder="<?php echo $entry_postcode; ?>" id="input-payment-postcode" class="form-control" />
-      </div>
-    </div>
-    <div class="form-group required">
-      <label class="col-sm-2 control-label" for="input-payment-country"><?php echo $entry_country; ?></label>
-      <div class="col-sm-10">
-        <select name="country_id" id="input-payment-country" class="form-control">
-          <option value=""><?php echo $text_select; ?></option>
-          <?php foreach ($countries as $country) { ?>
-          <?php if ($country['country_id'] == $country_id) { ?>
-          <option value="<?php echo $country['country_id']; ?>" selected="selected"><?php echo $country['name']; ?></option>
-          <?php } else { ?>
-          <option value="<?php echo $country['country_id']; ?>"><?php echo $country['name']; ?></option>
-          <?php } ?>
-          <?php } ?>
-        </select>
-      </div>
+
+    <div class="form-group required hidden">
+      <label class="control-label" for="input-payment-country"><?php echo $entry_country; ?></label>
+      <select name="country_id" id="input-payment-country" class="form-control">
+        <option value="30" selected="selected">Brasil</option>
+      </select>
     </div>
     <div class="form-group required">
       <label class="col-sm-2 control-label" for="input-payment-zone"><?php echo $entry_zone; ?></label>
       <div class="col-sm-10">
-        <select name="zone_id" id="input-payment-zone" class="form-control">
-        </select>
-      </div>
+      <?php include 'catalog/view/ukd_assets/html/zone_id.html' ?>
     </div>
+
     <?php foreach ($custom_fields as $custom_field) { ?>
     <?php if ($custom_field['location'] == 'address') { ?>
     <?php if ($custom_field['type'] == 'select') { ?>
@@ -343,9 +335,13 @@ $('#collapse-payment-address select[name=\'country_id\']').on('change', function
 	});
 });
 
-$('#collapse-payment-address select[name=\'country_id\']').trigger('change');
-
+//$('#collapse-payment-address select[name=\'country_id\']').trigger('change');
 })
 
-alert(9)
+<?php
+$form_name = 'payment_form' ;
+$collapse_name = '#collapse-payment-address' ;
+$button_name = '#button-payment-address' ;
+include_once 'catalog/view/ukd_assets/php/js/address_autofill.inc.php';
+?>
 //--></script>

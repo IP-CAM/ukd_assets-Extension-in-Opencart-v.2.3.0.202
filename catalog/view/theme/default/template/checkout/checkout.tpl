@@ -839,6 +839,18 @@ $('#collapse-checkout-confirm').on('hide.bs.collapse', function() {
 });
 
 //dataset
+window.register_form = [];
+window.register_form.input = [];
+window.register_form.select = [];
+
+window.payment_form = [];
+window.payment_form.input = [];
+window.payment_form.select = [];
+
+window.shipping_form = [];
+window.shipping_form.input = [];
+window.shipping_form.select = [];
+
 window.guest_form = [];
 window.guest_form.input = [];
 window.guest_form.select = [];

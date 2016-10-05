@@ -229,6 +229,8 @@
 </div>
 <script type="text/javascript"><!--
 // Sort the custom fields
+window.ukd_fn = window.ukd_fn || [];
+window.ukd_fn.push(function() {
 $('.form-group[data-sort]').detach().each(function() {
 	if ($(this).attr('data-sort') >= 0 && $(this).attr('data-sort') <= $('.form-group').length) {
 		$('.form-group').eq($(this).attr('data-sort')).before(this);
@@ -246,8 +248,7 @@ $('.form-group[data-sort]').detach().each(function() {
 		$('.form-group:first').before(this);
 	}
 });
-//--></script>
-<script type="text/javascript"><!--
+
 $('button[id^=\'button-custom-field\']').on('click', function() {
 	var node = this;
 
@@ -299,8 +300,7 @@ $('button[id^=\'button-custom-field\']').on('click', function() {
 		}
 	}, 500);
 });
-//--></script>
-<script type="text/javascript"><!--
+
 $('.date').datetimepicker({
 	pickTime: false
 });
@@ -312,6 +312,7 @@ $('.datetime').datetimepicker({
 
 $('.time').datetimepicker({
 	pickDate: false
+});
 });
 //--></script>
 <?php echo $footer; ?>

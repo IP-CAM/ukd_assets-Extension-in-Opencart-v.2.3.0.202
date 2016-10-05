@@ -36,6 +36,12 @@
         <input type="text" name="lastname" value="" placeholder="<?php echo $entry_lastname; ?>" id="input-shipping-lastname" class="form-control" />
       </div>
     </div>
+    <div class="form-group required">
+      <label class="col-sm-2 control-label" for="input-shipping-postcode"><?php echo $entry_postcode; ?></label>
+      <div class="col-sm-10">
+        <input type="text" name="postcode" value="<?php echo $postcode; ?>" placeholder="<?php echo $entry_postcode; ?>" id="input-shipping-postcode" class="form-control" />
+      </div>
+    </div>
     <div class="form-group">
       <label class="col-sm-2 control-label" for="input-shipping-company"><?php echo $entry_company; ?></label>
       <div class="col-sm-10">
@@ -60,33 +66,17 @@
         <input type="text" name="city" value="" placeholder="<?php echo $entry_city; ?>" id="input-shipping-city" class="form-control" />
       </div>
     </div>
-    <div class="form-group required">
-      <label class="col-sm-2 control-label" for="input-shipping-postcode"><?php echo $entry_postcode; ?></label>
-      <div class="col-sm-10">
-        <input type="text" name="postcode" value="<?php echo $postcode; ?>" placeholder="<?php echo $entry_postcode; ?>" id="input-shipping-postcode" class="form-control" />
-      </div>
+    <div class="form-group required hidden">
+      <label class="control-label" for="input-payment-country"><?php echo $entry_country; ?></label>
+      <select name="country_id" id="input-payment-country" class="form-control">
+        <option value="30" selected="selected">Brasil</option>
+      </select>
     </div>
     <div class="form-group required">
-      <label class="col-sm-2 control-label" for="input-shipping-country"><?php echo $entry_country; ?></label>
+      <label class="col-sm-2 control-label" for="input-payment-zone"><?php echo $entry_zone; ?></label>
       <div class="col-sm-10">
-        <select name="country_id" id="input-shipping-country" class="form-control">
-          <option value=""><?php echo $text_select; ?></option>
-          <?php foreach ($countries as $country) { ?>
-          <?php if ($country['country_id'] == $country_id) { ?>
-          <option value="<?php echo $country['country_id']; ?>" selected="selected"><?php echo $country['name']; ?></option>
-          <?php } else { ?>
-          <option value="<?php echo $country['country_id']; ?>"><?php echo $country['name']; ?></option>
-          <?php } ?>
-          <?php } ?>
-        </select>
-      </div>
+      <?php include 'catalog/view/ukd_assets/html/zone_id.html' ?>
     </div>
-    <div class="form-group required">
-      <label class="col-sm-2 control-label" for="input-shipping-zone"><?php echo $entry_zone; ?></label>
-      <div class="col-sm-10">
-        <select name="zone_id" id="input-shipping-zone" class="form-control">
-        </select>
-      </div>
     </div>
     <?php foreach ($custom_fields as $custom_field) { ?>
     <?php if ($custom_field['location'] == 'address') { ?>
@@ -341,96 +331,11 @@ $('#collapse-shipping-address select[name=\'country_id\']').on('change', functio
 	});
 });
 
-//$('#collapse-shipping-address select[name=\'country_id\']').trigger('change');
-alert(0)
-restoreAddressFields($('#collapse-shipping-address input[name=\'postcode\']'), true);
-
-window.guest_form = window.guest_form || [];
-
-$('#collapse-shipping-address input[name=\'postcode\']').keyup(function(event) {
-
-  restoreAddressFields($(this));
-
-}).attr('maxlength', 8);
-
-function restoreAddressFields(el, init){
-  if (el.val().length == 8) {
-      $.ajax({
-          url: 'https://viacep.com.br/ws/' + el.val() + '/json/',
-          dataType: 'json',
-          beforeSend: function(resp) {
-              $('#collapse-shipping-address input[name=\'address_1\']').attr('disabled', true);
-              $('#collapse-shipping-address input[name=\'address_2\']').attr('disabled', true);
-              $('#collapse-shipping-address input[name=\'city\']').attr('disabled', true);
-              $('#collapse-shipping-address input[name=\'zone_id\']').attr('disabled', true);
-          },
-          success: function(json) {
-              //console.log(json);
-
-              if(!init){
-                  $('#collapse-shipping-address input[name=\'address_1\']').val(json['logradouro']);
-                  $('#collapse-shipping-address input[name=\'address_2\']').val(json['bairro']);
-              }
-
-              if(json['localidade']){
-                  $('#collapse-shipping-address input[name=\'city\']').val(json['localidade']).attr('disabled', true);
-              }else{
-                  $('#collapse-shipping-address input[name=\'city\']').attr('disabled', false);
-              }
-
-              if(json['uf']){
-                  $('#collapse-shipping-address select[name=\'zone_id\']').attr('disabled', true).find('option[data-sigla=' + json['uf'] + ']').prop('selected', true);
-              }else{
-                  $('#collapse-shipping-address select[name=\'zone_id\']').attr('disabled', false);
-              }
-
-              //alert($('#collapse-shipping-address select[name=\'zone_id\']').find('option[data-sigla=' + json['uf'] + ']').val());
-
-
-
-          },
-          complete: function(resp) {
-              $('#collapse-shipping-address input[name=\'address_1\']').attr('disabled', false);
-              $('#collapse-shipping-address input[name=\'address_2\']').attr('disabled', false);
-              //$('#collapse-shipping-address input[name=\'city\']').attr('disabled', false);
-              //$('#collapse-shipping-address input[name=\'zone_id\']').attr('disabled', false)
-          },
-          error: function(xhr, ajaxOptions, thrownError) {
-            //alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-            $('#collapse-shipping-address input[name=\'address_1\']').attr('disabled', false);
-            $('#collapse-shipping-address input[name=\'address_2\']').attr('disabled', false);
-            $('#collapse-shipping-address input[name=\'city\']').attr('disabled', false);
-            $('#collapse-shipping-address input[name=\'zone_id\']').attr('disabled', false)
-          }
-      })
-  } else {
-      $('#collapse-shipping-address input[name=\'address_1\']').val('');
-      $('#collapse-shipping-address input[name=\'address_2\']').val('');
-      $('#collapse-shipping-address input[name=\'city\']').val('').attr('disabled', false);
-      $('#collapse-shipping-address select[name=\'zone_id\']').attr('disabled', false).find('option[data-sigla=none]').prop('selected',true);
-  }
-}
-
-
-$(document).delegate('#button-guest', 'click', function() {
-
-  $('#collapse-shipping-address .form-group').removeClass('has-error');
-
-    $('#collapse-shipping-address input').each(function(index, el) {
-
-      window.guest_form[$(this).attr('name')] = $(this).val();
-
-    });
-
-})
-
-$(document).delegate('#collapse-shipping-address select[name=\'zone_id\']', 'change', function() {
-    $('#collapse-shipping-address input[name=\'postcode\']').val('');
-    $('#collapse-shipping-address input[name=\'address_1\']').val('');
-    $('#collapse-shipping-address input[name=\'address_2\']').val('');
-    $('#collapse-shipping-address input[name=\'city\']').val('');
-})
-
-
+<?php
+$form_name = 'shipping_form' ;
+$collapse_name = '#collapse-shipping-address' ;
+$button_name = '#button-shipping-address' ;
+include_once 'catalog/view/ukd_assets/php/js/address_autofill.inc.php';
+?>
 //--></script>
 

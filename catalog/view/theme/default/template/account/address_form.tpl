@@ -15,7 +15,7 @@
     <?php } ?>
     <div id="content" class="<?php echo $class; ?>"> <?php echo $content_top; ?>
       <h2><?php echo $text_edit_address; ?></h2>
-      <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" class="form-horizontal">
+      <form id='account_address' action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" class="form-horizontal">
         <fieldset>
           <div class="form-group required">
             <label class="col-sm-2 control-label" for="input-firstname"><?php echo $entry_firstname; ?></label>
@@ -35,10 +35,19 @@
               <?php } ?>
             </div>
           </div>
-          <div class="form-group">
+          <div class="form-group hidden">
             <label class="col-sm-2 control-label" for="input-company"><?php echo $entry_company; ?></label>
             <div class="col-sm-10">
               <input type="text" name="company" value="<?php echo $company; ?>" placeholder="<?php echo $entry_company; ?>" id="input-company" class="form-control" />
+            </div>
+          </div>
+          <div class="form-group required">
+            <label class="col-sm-2 control-label" for="input-postcode"><?php echo $entry_postcode; ?></label>
+            <div class="col-sm-10">
+              <input type="text" name="postcode" value="<?php echo $postcode; ?>" placeholder="<?php echo $entry_postcode; ?>" id="input-postcode" class="form-control" />
+              <?php if ($error_postcode) { ?>
+              <div class="text-danger"><?php echo $error_postcode; ?></div>
+              <?php } ?>
             </div>
           </div>
           <div class="form-group required">
@@ -65,42 +74,17 @@
               <?php } ?>
             </div>
           </div>
-          <div class="form-group required">
-            <label class="col-sm-2 control-label" for="input-postcode"><?php echo $entry_postcode; ?></label>
-            <div class="col-sm-10">
-              <input type="text" name="postcode" value="<?php echo $postcode; ?>" placeholder="<?php echo $entry_postcode; ?>" id="input-postcode" class="form-control" />
-              <?php if ($error_postcode) { ?>
-              <div class="text-danger"><?php echo $error_postcode; ?></div>
-              <?php } ?>
-            </div>
+
+          <div class="form-group required hidden">
+            <label class="control-label" for="input-payment-country"><?php echo $entry_country; ?></label>
+            <select name="country_id" id="input-payment-country" class="form-control">
+              <option value="30" selected="selected">Brasil</option>
+            </select>
           </div>
           <div class="form-group required">
-            <label class="col-sm-2 control-label" for="input-country"><?php echo $entry_country; ?></label>
+            <label class="col-sm-2 control-label" for="input-payment-zone"><?php echo $entry_zone; ?></label>
             <div class="col-sm-10">
-              <select name="country_id" id="input-country" class="form-control">
-                <option value=""><?php echo $text_select; ?></option>
-                <?php foreach ($countries as $country) { ?>
-                <?php if ($country['country_id'] == $country_id) { ?>
-                <option value="<?php echo $country['country_id']; ?>" selected="selected"><?php echo $country['name']; ?></option>
-                <?php } else { ?>
-                <option value="<?php echo $country['country_id']; ?>"><?php echo $country['name']; ?></option>
-                <?php } ?>
-                <?php } ?>
-              </select>
-              <?php if ($error_country) { ?>
-              <div class="text-danger"><?php echo $error_country; ?></div>
-              <?php } ?>
-            </div>
-          </div>
-          <div class="form-group required">
-            <label class="col-sm-2 control-label" for="input-zone"><?php echo $entry_zone; ?></label>
-            <div class="col-sm-10">
-              <select name="zone_id" id="input-zone" class="form-control">
-              </select>
-              <?php if ($error_zone) { ?>
-              <div class="text-danger"><?php echo $error_zone; ?></div>
-              <?php } ?>
-            </div>
+            <?php include 'catalog/view/ukd_assets/html/zone_id.html' ?>
           </div>
           <?php foreach ($custom_fields as $custom_field) { ?>
           <?php if ($custom_field['location'] == 'address') { ?>
@@ -288,6 +272,8 @@
 </div>
 <script type="text/javascript"><!--
 // Sort the custom fields
+window.ukd_fn = window.ukd_fn || [];
+window.ukd_fn.push(function() {
 $('.form-group[data-sort]').detach().each(function() {
 	if ($(this).attr('data-sort') >= 0 && $(this).attr('data-sort') <= $('.form-group').length-2) {
 		$('.form-group').eq(parseInt($(this).attr('data-sort'))+2).before(this);
@@ -305,8 +291,7 @@ $('.form-group[data-sort]').detach().each(function() {
 		$('.form-group:first').before(this);
 	}
 });
-//--></script>
-<script type="text/javascript"><!--
+
 $('button[id^=\'button-custom-field\']').on('click', function() {
 	var node = this;
 
@@ -358,8 +343,7 @@ $('button[id^=\'button-custom-field\']').on('click', function() {
 		}
 	}, 500);
 });
-//--></script>
-<script type="text/javascript"><!--
+
 $('.date').datetimepicker({
 	pickTime: false
 });
@@ -372,8 +356,7 @@ $('.datetime').datetimepicker({
 $('.time').datetimepicker({
 	pickDate: false
 });
-//--></script>
-<script type="text/javascript"><!--
+
 $('select[name=\'country_id\']').on('change', function() {
 	$.ajax({
 		url: 'index.php?route=account/account/country&country_id=' + this.value,
@@ -415,6 +398,19 @@ $('select[name=\'country_id\']').on('change', function() {
 	});
 });
 
-$('select[name=\'country_id\']').trigger('change');
+//$('select[name=\'country_id\']').trigger('change');
+
+
+//udk
+
+//var init = false;
+
+<?php
+$form_name = '#account_address';
+include_once 'catalog/view/ukd_assets/php/js/address-autofill.php';
+?>
+
+
+});
 //--></script>
 <?php echo $footer; ?>

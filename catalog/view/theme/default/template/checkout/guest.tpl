@@ -491,13 +491,6 @@ $('#collapse-payment-address select[name=\'country_id\']').on('change', function
 
 //ukd
 
-/*  Load Mask Lib */
-require(["mask"], function() {
-  $('.phone_mask').mask('(00) 000000000', {placeholder: "(DDD) Número do telefone"});
-  $('.postcode_mask').mask('00000000', {placeholder: "Somente números. Ex.: 42850000"});
-})
-
-
 <?php
 $form_name = 'guest_form' ;
 $collapse_name = '#collapse-payment-address' ;

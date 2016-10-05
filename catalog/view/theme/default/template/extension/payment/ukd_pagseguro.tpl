@@ -334,6 +334,7 @@ function process() {
 
     var error = false;
 
+    if(!$("#form_pagseguro input[name=senderHash]").val())
     $("#form_pagseguro input[name=senderHash]").val(PagSeguroDirectPayment.getSenderHash());
 
     $.ajax({
@@ -372,7 +373,6 @@ function process() {
 
             if (!error) $('#processModal').modal('hide');
             $('#button-confirm').button('reset');
-            window.token = null;
 
         }
 
@@ -454,7 +454,10 @@ function filterError(code) {
     }
     if (code == 30400) {
         $('#cc_form input[name=cardNumber]').parent('.input-group').addClass('has-error');
+        window.token = null;
     }
+
+    //53021 - sender phone invalid value
 
     console.log(code, 'filterError');
 
@@ -469,7 +472,7 @@ function errorAlert(content){
   $('#processModal .modal-body').html('<span style="text-transform: uppercase">' + content + '</span>');
 
   $('#processModal').modal('show');
-  
+
 }
 
 </script>
