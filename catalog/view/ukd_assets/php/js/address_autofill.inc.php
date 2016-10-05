@@ -5,57 +5,57 @@ require(["mask"], function() {
 })
 
 
-function save() {
-    $('<?php echo $collapse_name ?> input').each(function(index, el) {
-        window.
-        <?php echo $form_name ?>.input[$(this).attr('name')] = $(this).val();
-    });
-    $('<?php echo $collapse_name ?> select').each(function(index, el) {
-        window.
-        <?php echo $form_name ?>.select[$(this).attr('name')] = $(this).find('option:selected').val();
-        //console.log($(this).find('option:selected').val(), '---------');
-    });
-}
-
-function load() {
-
-    if (window.<?php echo $form_name ?>.input) {
-
-        for (i in window.<?php echo $form_name ?>.input) {
-            $('<?php echo $collapse_name ?> input[name="' + i + '"]').val(window.
-                <?php echo $form_name ?>.input[i]);
-        }
-
-    }
-
-    if (window.<?php echo $form_name ?>.select) {
-
-        for (i in window.<?php echo $form_name ?>.select) {
-          //  console.log(i, window.<?php echo $form_name ?>.select[i]);
-            if (i != 'country_id') {
-                $('<?php echo $collapse_name ?> select[name=' + i + ']').attr('disabled', false).find('option[value=' + window.
-                    <?php echo $form_name ?>.select[i] + ']').prop('selected', true);
-            }
-        }
-
-    }
-
-}
-
-load();
-
-
-$('<?php echo $collapse_name ?> input').blur(function(event) {
-
-    save();
-
-})
-
-$('<?php echo $collapse_name ?> select').blur(function(event) {
-
-    save();
-
-})
+// function save() {
+//     $('<?php echo $collapse_name ?> input').each(function(index, el) {
+//         window.
+//         <?php echo $form_name ?>.input[$(this).attr('name')] = $(this).val();
+//     });
+//     $('<?php echo $collapse_name ?> select').each(function(index, el) {
+//         window.
+//         <?php echo $form_name ?>.select[$(this).attr('name')] = $(this).find('option:selected').val();
+//         //console.log($(this).find('option:selected').val(), '---------');
+//     });
+// }
+//
+// function load() {
+//
+//     if (window.<?php echo $form_name ?>.input) {
+//
+//         for (i in window.<?php echo $form_name ?>.input) {
+//             $('<?php echo $collapse_name ?> input[name="' + i + '"]').val(window.
+//                 <?php echo $form_name ?>.input[i]);
+//         }
+//
+//     }
+//
+//     if (window.<?php echo $form_name ?>.select) {
+//
+//         for (i in window.<?php echo $form_name ?>.select) {
+//           //  console.log(i, window.<?php echo $form_name ?>.select[i]);
+//             if (i != 'country_id') {
+//                 $('<?php echo $collapse_name ?> select[name=' + i + ']').attr('disabled', false).find('option[value=' + window.
+//                     <?php echo $form_name ?>.select[i] + ']').prop('selected', true);
+//             }
+//         }
+//
+//     }
+//
+// }
+//
+// load();
+//
+//
+// $('<?php echo $collapse_name ?> input').blur(function(event) {
+//
+//     save();
+//
+// })
+//
+// $('<?php echo $collapse_name ?> select').blur(function(event) {
+//
+//     save();
+//
+// })
 
 
 $('<?php echo $collapse_name ?> input[name=\'postcode\']').keyup(function(event) {

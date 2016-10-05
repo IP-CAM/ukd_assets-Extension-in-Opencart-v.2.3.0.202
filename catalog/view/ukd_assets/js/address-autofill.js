@@ -1,10 +1,8 @@
 //$('select[name=\'zone_id\']').val(<?php echo $zone_id ?>);
 
-readonly(true);
-
 address_autofill($('input[name=\'postcode\']'));
 
-$('input[name=\'postcode\']').keyup(function(event) {
+$('input[name=\'postcode\']').keyup(function() {
 
     address_autofill($(this));
 
@@ -16,7 +14,7 @@ function address_autofill(el) {
             url: 'https://viacep.com.br/ws/' + el.val() + '/json/',
             dataType: 'json',
             beforeSend: function(resp) {
-                readonly(true);
+                readonly(['address_1', 'address_2', 'city', 'zone_id'], true);
             },
             success: function(json) {
 
@@ -41,11 +39,11 @@ function address_autofill(el) {
 
             },
             complete: function(resp) {
-                $('input[name=\'address_1\']').attr('readonly', false);
-                $('input[name=\'address_2\']').attr('readonly', false);
+                readonly(['address_1', 'address_2'], false);
+
             },
             error: function(xhr, ajaxOptions, thrownError) {
-                readonly(false);
+                readonly(['address_1', 'address_2', 'city', 'zone_id'], false);
             }
         })
     } else {
@@ -54,9 +52,8 @@ function address_autofill(el) {
     }
 }
 
-function readonly(s) {
-    $('input[name=\'address_1\']').attr('readonly', s);
-    $('input[name=\'address_2\']').attr('readonly', s);
-    $('input[name=\'city\']').attr('readonly', s);
-    $('select[name=\'zone_id\']').attr('readonly', s);
+function readonly(o, s) {
+    for (i in o) {
+        $('*[name=\'' + i + '\']').attr('readonly', s);
+    }
 }
