@@ -112,7 +112,7 @@ function validate() {
 
     if (cpf.length < 11) {
         error['cpf'] = 'Número do CPF deve ter 11 digitos';
-    }else if(!validaCPF(cpf)){
+    }else if(!window.validaCPF(cpf)){
         error['cpf'] = 'CPF inválido';
     }
 

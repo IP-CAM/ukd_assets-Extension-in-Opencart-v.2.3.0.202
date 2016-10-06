@@ -198,10 +198,10 @@ $('#button-confirm').on('click', function() {
 var cpf = $('#collapse-payment-address input[placeholder=CPF]').val()
 $('#form_pagseguro input[name=senderCPF]').val(cpf);
 
-var email = $('#collapse-payment-address input[name=email]').val()
+var email = $('#collapse-payment-address input[name=email]').val() || customer['email'] ;
 $('#form_pagseguro input[name=senderEmail]').val(email);
 
-var payment_telephone = $('#collapse-payment-address input[name=telephone]').val()
+var payment_telephone = $('#collapse-payment-address input[name=telephone]').val() || customer['telephone'] ;
 
 payment_telephone = payment_telephone.split(' ');
 

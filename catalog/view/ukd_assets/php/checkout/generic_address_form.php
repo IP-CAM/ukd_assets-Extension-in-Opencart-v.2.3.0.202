@@ -334,6 +334,8 @@ $('#collapse-<?php echo $id ?>-address select[name=\'country_id\']').on('change'
 	});
 });
 
-require(["catalog/view/ukd_assets/js/address-autofill.js"])
+require(["catalog/view/ukd_assets/js/address-autofill.js"], function(){
+  autofill();
+});
 
 </script>
