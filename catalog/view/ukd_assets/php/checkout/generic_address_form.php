@@ -10,9 +10,9 @@
     <select name="address_id" class="form-control">
       <?php foreach ($addresses as $address) { ?>
       <?php if ($address['address_id'] == $address_id) { ?>
-      <option value="<?php echo $address['address_id']; ?>" selected="selected"><?php echo $address['firstname']; ?> <?php echo $address['lastname']; ?>, <?php echo $address['address_1']; ?>, <?php echo $address['city']; ?>, <?php echo $address['zone']; ?>, <?php echo $address['country']; ?></option>
+      <option value="<?php echo $address['address_id']; ?>" selected="selected" data-address='<?php echo json_encode( $address,JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_UNESCAPED_UNICODE); ?>'><?php echo $address['firstname']; ?> <?php echo $address['lastname']; ?>, <?php echo $address['address_1']; ?>, <?php echo $address['city']; ?>, <?php echo $address['zone']; ?>, <?php echo $address['country']; ?></option>
       <?php } else { ?>
-      <option value="<?php echo $address['address_id']; ?>"><?php echo $address['firstname']; ?> <?php echo $address['lastname']; ?>, <?php echo $address['address_1']; ?>, <?php echo $address['city']; ?>, <?php echo $address['zone']; ?>, <?php echo $address['country']; ?></option>
+      <option data-address='<?php echo json_encode( $address,JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_UNESCAPED_UNICODE); ?>' value="<?php echo $address['address_id']; ?>"><?php echo $address['firstname']; ?> <?php echo $address['lastname']; ?>, <?php echo $address['address_1']; ?>, <?php echo $address['city']; ?>, <?php echo $address['zone']; ?>, <?php echo $address['country']; ?></option>
       <?php } ?>
       <?php } ?>
     </select>
@@ -333,6 +333,13 @@ $('#collapse-<?php echo $id ?>-address select[name=\'country_id\']').on('change'
 		}
 	});
 });
+
+
+// Object { address_id: "13", firstname: "fred", lastname: "lee", company: "", address_1: "Rua Eteno", address_2: "Polo Petroquímico", postcode: "42810000", city: "Camaçari", zone_id: "444", zone: "Bahia", 7 more… }
+$('select[name=address_id]').change(function(event) {
+  window.customer_<?php echo $id ?>_address = $(this).find('option:selected').data('address');
+  //console.log(window.customer_address);
+}).trigger('change');
 
 require(["catalog/view/ukd_assets/js/address-autofill.js"], function(){
   autofill();

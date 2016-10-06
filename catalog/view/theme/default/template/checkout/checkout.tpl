@@ -89,7 +89,7 @@
     <?php echo $column_right; ?></div>
 </div>
 <script type="text/javascript"><!--
-var customer = <?php echo $customer ?> ;
+window.customer = <?php echo $customer ?> ;
 window.ukd_fn = window.ukd_fn || [];
 window.ukd_fn.push(function() {
 $(document).on('change', 'input[name=\'account\']', function() {

@@ -192,6 +192,8 @@ function getCardBrand(val) {
 
 function getCardBrandCallback(res) {
 
+  console.log(window.customer_payment_address)
+
     ccdata['name'] = res.brand.name;
     ccdata['displayName'] = window.options[ccdata['name'].toUpperCase()]['displayName'];
     ccdata['cvvSize'] = res.brand.cvvSize;
@@ -365,6 +367,14 @@ function createCardTokenCallback(token) {
     var installmentAmount = installments.data('installmentAmount');
     var quantity = installments.data('quantity');
 
+    var billingAddressStreet = $('#collapse-payment-address input[name=address_1]').val() || window.customer_payment_address['address_1'];
+    var billingAddressNumber = $('#collapse-payment-address input[name=address_2]').val() || window.customer_payment_address['address_2'];
+    var billingAddressComplement = $('#collapse-payment-address input[name=address_1]').val() || window.customer_payment_address['address_1'];
+    var billingAddressDistrict = $('#collapse-payment-address input[name=address_2]').val() || window.customer_payment_address['address_2'];
+    var billingAddressPostalCode = $('#collapse-payment-address input[name=postcode]').val() || window.customer_payment_address['postcode'];
+    var billingAddressCity = $('#collapse-payment-address input[name=city]').val() || window.customer_payment_address['city'];
+    var billingAddressState = $('#collapse-payment-address select[name=zone_id]').find('option:selected').data('sigla') || window.customer_payment_address['zone_code'];
+
     $('#form_pagseguro input[name=creditCardToken]').val(token);
 
     $('#form_pagseguro input[name=installmentQuantity]').val(quantity);
@@ -373,17 +383,16 @@ function createCardTokenCallback(token) {
     $('#form_pagseguro input[name=creditCardHolderName]').val(getVal('cardOwner'));
     $('#form_pagseguro input[name=creditCardHolderCPF]').val(getVal('cpf'));
     $('#form_pagseguro input[name=creditCardHolderBirthDate]').val(getVal('birthDate'));
-
     $('#form_pagseguro input[name=creditCardHolderAreaCode]').val($('#form_pagseguro input[name=senderAreaCode]').val());
     $('#form_pagseguro input[name=creditCardHolderPhone]').val($('#form_pagseguro input[name=senderPhone]').val());
 
-    $('#form_pagseguro input[name=billingAddressStreet]').val($('#collapse-payment-address input[name=address_1]').val());
-    $('#form_pagseguro input[name=billingAddressNumber]').val($('#collapse-payment-address input[name=address_2]').val());
-    $('#form_pagseguro input[name=billingAddressComplement]').val($('#collapse-payment-address input[name=address_2]').val());
-    $('#form_pagseguro input[name=billingAddressDistrict]').val($('#collapse-payment-address input[name=address_2]').val());
-    $('#form_pagseguro input[name=billingAddressPostalCode]').val($('#collapse-payment-address input[name=postcode]').val());
-    $('#form_pagseguro input[name=billingAddressCity]').val($('#collapse-payment-address input[name=city]').val());
-    $('#form_pagseguro input[name=billingAddressState]').val($('#collapse-payment-address select[name=zone_id]').find('option:selected').data('sigla'));
+    $('#form_pagseguro input[name=billingAddressStreet]').val(billingAddressStreet);
+    $('#form_pagseguro input[name=billingAddressNumber]').val(billingAddressNumber);
+    $('#form_pagseguro input[name=billingAddressComplement]').val(billingAddressComplement);
+    $('#form_pagseguro input[name=billingAddressDistrict]').val(billingAddressDistrict);
+    $('#form_pagseguro input[name=billingAddressPostalCode]').val(billingAddressPostalCode);
+    $('#form_pagseguro input[name=billingAddressCity]').val(billingAddressCity);
+    $('#form_pagseguro input[name=billingAddressState]').val(billingAddressState);
 
     process();
 

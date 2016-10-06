@@ -97,8 +97,11 @@ class ControllerCheckoutCheckout extends Controller {
 			'firstname'=>$this->customer->getFirstName(),
 			'lastname'=>$this->customer->getLastName(),
 			'telephone'=>$this->customer->getTelephone(),
-			'email'=>$this->customer->getEmail()
+			'email'=>$this->customer->getEmail(),
+			'cpf'=>$this->getCustomfield('CPF')
 		];
+
+
 
 		$data['customer'] = json_encode($customer);
 
@@ -154,5 +157,31 @@ class ControllerCheckoutCheckout extends Controller {
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
+	}
+
+
+	public function getCustomfield($name) {
+
+		if(!isset($this->model_account_customer)){
+			$this->load->model('account/customer');
+			$this->load->model('account/custom_field');
+			$customer_info = $this->model_account_customer->getCustomer($this->customer->getId());
+			$this->custom_fields = $this->model_account_custom_field->getCustomFields($this->config->get('config_customer_group_display'));
+			$this->field_values = json_decode( $customer_info['custom_field'], true);
+		}
+
+		$resp = '';
+
+		foreach( $this->custom_fields as $f){
+
+			if($f['name'] == $name){
+				$resp = $this->field_values[$f['custom_field_id']];
+				break;
+			}
+
+		}
+
+		return  $resp;
+
 	}
 }
