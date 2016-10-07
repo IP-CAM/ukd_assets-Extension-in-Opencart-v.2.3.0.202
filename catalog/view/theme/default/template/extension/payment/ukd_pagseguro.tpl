@@ -195,8 +195,8 @@ $('#button-confirm').on('click', function() {
     }
 });
 
-var cpf = $('#collapse-payment-address input[placeholder=CPF]').val()
-$('#form_pagseguro input[name=senderCPF]').val(cpf);
+var cpf = $('#collapse-payment-address input[placeholder=CPF]').val() ||  window.customer['cpf'] ;
+$('#form_pagseguro input[name=senderCPF]').val(cpf) ;
 
 var email = $('#collapse-payment-address input[name=email]').val() || window.customer['email'] ;
 $('#form_pagseguro input[name=senderEmail]').val(email);

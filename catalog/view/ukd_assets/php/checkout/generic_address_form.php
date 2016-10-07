@@ -1,8 +1,8 @@
-<form class="form-horizontal">
+<form id="form-<?php echo $id ?>" class="form-horizontal">
   <?php if ($addresses) { ?>
   <div class="radio">
     <label>
-      <input type="radio" name="<?php echo $id ?>_address" value="existing" checked="checked" />
+      <input type="radio" id="existing_address" name="<?php echo $id ?>_address" value="existing" checked="checked" />
       <?php echo $text_address_existing; ?></label>
   </div>
   <div id="<?php echo $id ?>-existing">
@@ -20,7 +20,7 @@
   </div>
   <div class="radio">
     <label>
-      <input type="radio" name="<?php echo $id ?>_address" value="new" />
+      <input type="radio" id="new_address" name="<?php echo $id ?>_address" value="new" />
       <?php echo $text_address_new; ?></label>
   </div>
   <?php } ?>
@@ -199,150 +199,185 @@
 </form>
 <script type="text/javascript"><!--
 
-$('input[name=\'<?php echo $id ?>_address\']').on('change', function() {
-	if (this.value == 'new') {
-		$('#<?php echo $id ?>-existing').hide();
-		$('#<?php echo $id ?>-new').show();
-	} else {
-		$('#<?php echo $id ?>-existing').show();
-		$('#<?php echo $id ?>-new').hide();
-	}
-});
+
+$('#form-<?php echo $id ?> #existing_address').on('click', function() {
+
+    $('#form-<?php echo $id ?> #<?php echo $id ?>-existing').show();
+    $('#form-<?php echo $id ?> #<?php echo $id ?>-new').hide();
+    window.<?php echo $id ?>_address['radio_address'] = 'existing_address';
+    $('#form-<?php echo $id ?> input[name=<?php echo $id ?>_address]').val('existing');
+
+})
+
+$('#form-<?php echo $id ?> #new_address').on('click', function() {
+
+    $('#form-<?php echo $id ?> #<?php echo $id ?>-existing').hide();
+    $('#form-<?php echo $id ?> #<?php echo $id ?>-new').show();
+    window.<?php echo $id ?>_address['radio_address'] = 'new_address';
+    $('#form-<?php echo $id ?> input[name=<?php echo $id ?>_address]').val('new');
+
+})
 
 // Sort the custom fields
 $('#collapse-<?php echo $id ?>-address .form-group[data-sort]').detach().each(function() {
-	if ($(this).attr('data-sort') >= 0 && $(this).attr('data-sort') <= $('#collapse-<?php echo $id ?>-address .form-group').length-2) {
-		$('#collapse-<?php echo $id ?>-address .form-group').eq(parseInt($(this).attr('data-sort'))+2).before(this);
-	}
+    if ($(this).attr('data-sort') >= 0 && $(this).attr('data-sort') <= $('#collapse-<?php echo $id ?>-address .form-group').length - 2) {
+        $('#collapse-<?php echo $id ?>-address .form-group').eq(parseInt($(this).attr('data-sort')) + 2).before(this);
+    }
 
-	if ($(this).attr('data-sort') > $('#collapse-<?php echo $id ?>-address .form-group').length-2) {
-		$('#collapse-<?php echo $id ?>-address .form-group:last').after(this);
-	}
+    if ($(this).attr('data-sort') > $('#collapse-<?php echo $id ?>-address .form-group').length - 2) {
+        $('#collapse-<?php echo $id ?>-address .form-group:last').after(this);
+    }
 
-	if ($(this).attr('data-sort') == $('#collapse-<?php echo $id ?>-address .form-group').length-2) {
-		$('#collapse-<?php echo $id ?>-address .form-group:last').after(this);
-	}
+    if ($(this).attr('data-sort') == $('#collapse-<?php echo $id ?>-address .form-group').length - 2) {
+        $('#collapse-<?php echo $id ?>-address .form-group:last').after(this);
+    }
 
-	if ($(this).attr('data-sort') < -$('#collapse-<?php echo $id ?>-address .form-group').length-2) {
-		$('#collapse-<?php echo $id ?>-address .form-group:first').before(this);
-	}
+    if ($(this).attr('data-sort') < -$('#collapse-<?php echo $id ?>-address .form-group').length - 2) {
+        $('#collapse-<?php echo $id ?>-address .form-group:first').before(this);
+    }
 });
 
 $('#collapse-<?php echo $id ?>-address button[id^=\'button-<?php echo $id ?>-custom-field\']').on('click', function() {
-	var node = this;
+    var node = this;
 
-	$('#form-upload').remove();
+    $('#form-upload').remove();
 
-	$('body').prepend('<form enctype="multipart/form-data" id="form-upload" style="display: none;"><input type="file" name="file" /></form>');
+    $('body').prepend('<form enctype="multipart/form-data" id="form-upload" style="display: none;"><input type="file" name="file" /></form>');
 
-	$('#form-upload input[name=\'file\']').trigger('click');
+    $('#form-upload input[name=\'file\']').trigger('click');
 
-	if (typeof timer != 'undefined') {
-    	clearInterval(timer);
-	}
+    if (typeof timer != 'undefined') {
+        clearInterval(timer);
+    }
 
-	timer = setInterval(function() {
-		if ($('#form-upload input[name=\'file\']').val() != '') {
-			clearInterval(timer);
+    timer = setInterval(function() {
+        if ($('#form-upload input[name=\'file\']').val() != '') {
+            clearInterval(timer);
 
-			$.ajax({
-				url: 'index.php?route=tool/upload',
-				type: 'post',
-				dataType: 'json',
-				data: new FormData($('#form-upload')[0]),
-				cache: false,
-				contentType: false,
-				processData: false,
-				beforeSend: function() {
-					$(node).button('loading');
-				},
-				complete: function() {
-					$(node).button('reset');
-				},
-				success: function(json) {
-					$(node).parent().find('.text-danger').remove();
+            $.ajax({
+                url: 'index.php?route=tool/upload',
+                type: 'post',
+                dataType: 'json',
+                data: new FormData($('#form-upload')[0]),
+                cache: false,
+                contentType: false,
+                processData: false,
+                beforeSend: function() {
+                    $(node).button('loading');
+                },
+                complete: function() {
+                    $(node).button('reset');
+                },
+                success: function(json) {
+                    $(node).parent().find('.text-danger').remove();
 
-					if (json['error']) {
-						$(node).parent().find('input[name^=\'custom_field\']').after('<div class="text-danger">' + json['error'] + '</div>');
-					}
+                    if (json['error']) {
+                        $(node).parent().find('input[name^=\'custom_field\']').after('<div class="text-danger">' + json['error'] + '</div>');
+                    }
 
-					if (json['success']) {
-						alert(json['success']);
+                    if (json['success']) {
+                        alert(json['success']);
 
-						$(node).parent().find('input[name^=\'custom_field\']').val(json['code']);
-					}
-				},
-				error: function(xhr, ajaxOptions, thrownError) {
-					alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-				}
-			});
-		}
-	}, 500);
+                        $(node).parent().find('input[name^=\'custom_field\']').val(json['code']);
+                    }
+                },
+                error: function(xhr, ajaxOptions, thrownError) {
+                    alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+                }
+            });
+        }
+    }, 500);
 });
 
 $('.date').datetimepicker({
-	pickTime: false
+    pickTime: false
 });
 
 $('.time').datetimepicker({
-	pickDate: false
+    pickDate: false
 });
 
 $('.datetime').datetimepicker({
-	pickDate: true,
-	pickTime: true
+    pickDate: true,
+    pickTime: true
 });
 
-$('#collapse-<?php echo $id ?>-address select[name=\'country_id\']').on('change', function() {
-	$.ajax({
-		url: 'index.php?route=checkout/checkout/country&country_id=' + this.value,
-		dataType: 'json',
-		beforeSend: function() {
-			$('#collapse-<?php echo $id ?>-address select[name=\'country_id\']').after(' <i class="fa fa-circle-o-notch fa-spin"></i>');
-		},
-		complete: function() {
-			$('.fa-spin').remove();
-		},
-		success: function(json) {
-			if (json['postcode_required'] == '1') {
-				$('#collapse-<?php echo $id ?>-address input[name=\'postcode\']').parent().parent().addClass('required');
-			} else {
-				$('#collapse-<?php echo $id ?>-address input[name=\'postcode\']').parent().parent().removeClass('required');
-			}
+// $('#collapse-<?php echo $id ?>-address select[name=\'country_id\']').on('change', function() {
+// 	$.ajax({
+// 		url: 'index.php?route=checkout/checkout/country&country_id=' + this.value,
+// 		dataType: 'json',
+// 		beforeSend: function() {
+// 			$('#collapse-<?php echo $id ?>-address select[name=\'country_id\']').after(' <i class="fa fa-circle-o-notch fa-spin"></i>');
+// 		},
+// 		complete: function() {
+// 			$('.fa-spin').remove();
+// 		},
+// 		success: function(json) {
+// 			if (json['postcode_required'] == '1') {
+// 				$('#collapse-<?php echo $id ?>-address input[name=\'postcode\']').parent().parent().addClass('required');
+// 			} else {
+// 				$('#collapse-<?php echo $id ?>-address input[name=\'postcode\']').parent().parent().removeClass('required');
+// 			}
+//
+// 			html = '<option value=""><?php echo $text_select; ?></option>';
+//
+// 			if (json['zone'] && json['zone'] != '') {
+// 				for (i = 0; i < json['zone'].length; i++) {
+// 					html += '<option value="' + json['zone'][i]['zone_id'] + '"';
+//
+// 					if (json['zone'][i]['zone_id'] == '<?php echo $zone_id; ?>') {
+// 						html += ' selected="selected"';
+// 					}
+//
+// 					html += '>' + json['zone'][i]['name'] + '</option>';
+// 				}
+// 			} else {
+// 				html += '<option value="0" selected="selected"><?php echo $text_none; ?></option>';
+// 			}
+//
+// 			$('#collapse-<?php echo $id ?>-address select[name=\'zone_id\']').html(html);
+// 		},
+// 		error: function(xhr, ajaxOptions, thrownError) {
+// 			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+// 		}
+// 	});
+// });
 
-			html = '<option value=""><?php echo $text_select; ?></option>';
 
-			if (json['zone'] && json['zone'] != '') {
-				for (i = 0; i < json['zone'].length; i++) {
-					html += '<option value="' + json['zone'][i]['zone_id'] + '"';
 
-					if (json['zone'][i]['zone_id'] == '<?php echo $zone_id; ?>') {
-						html += ' selected="selected"';
-					}
+//ukd
 
-					html += '>' + json['zone'][i]['name'] + '</option>';
-				}
-			} else {
-				html += '<option value="0" selected="selected"><?php echo $text_none; ?></option>';
-			}
 
-			$('#collapse-<?php echo $id ?>-address select[name=\'zone_id\']').html(html);
-		},
-		error: function(xhr, ajaxOptions, thrownError) {
-			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-		}
-	});
+if (window.<?php echo $id ?>_address) {
+    //console.log(window.<?php echo $id ?>_address);
+    for (i in window.<?php echo $id ?>_address) {
+        if (i == 'radio_address') {
+            $('#form-<?php echo $id ?> #' + window.<?php echo $id ?>_address[i]).click();
+        } else {
+            $('#form-<?php echo $id ?> *[name=' + i + ']').val(window.<?php echo $id ?>_address[i]);
+        }
+    }
+} else {
+    window.<?php echo $id ?>_address = [];
+}
+
+var el = $('#form-<?php echo $id ?> input, #form-<?php echo $id ?> select');
+
+el.blur(function(event) {
+
+    el.each(function(index, el) {
+
+        window.<?php echo $id ?>_address[$(this).attr('name')] = $(this).val();
+
+    });
+
 });
 
-
-// Object { address_id: "13", firstname: "fred", lastname: "lee", company: "", address_1: "Rua Eteno", address_2: "Polo Petroquímico", postcode: "42810000", city: "Camaçari", zone_id: "444", zone: "Bahia", 7 more… }
-$('select[name=address_id]').change(function(event) {
+$('#form-<?php echo $id ?> select[name=address_id]').change(function(event) {
   window.customer_<?php echo $id ?>_address = $(this).find('option:selected').data('address');
-  //console.log(window.customer_address);
 }).trigger('change');
 
-require(["catalog/view/ukd_assets/js/address-autofill.js"], function(){
-  autofill();
+require(["catalog/view/ukd_assets/js/address-autofill.js"], function() {
+    autofill('#form-<?php echo $id ?> ');
 });
-
 </script>

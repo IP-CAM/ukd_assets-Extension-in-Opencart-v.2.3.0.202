@@ -98,7 +98,7 @@ class ControllerCheckoutCheckout extends Controller {
 			'lastname'=>$this->customer->getLastName(),
 			'telephone'=>$this->customer->getTelephone(),
 			'email'=>$this->customer->getEmail(),
-			'cpf'=>$this->getCustomfield('CPF')
+			'cpf'=>$this->getCustomfieldByName('CPF')
 		];
 
 
@@ -160,9 +160,9 @@ class ControllerCheckoutCheckout extends Controller {
 	}
 
 
-	public function getCustomfield($name) {
+	public function getCustomfieldByName($name) {
 
-		if(!isset($this->model_account_customer)){
+		if(!isset($this->field_values)){
 			$this->load->model('account/customer');
 			$this->load->model('account/custom_field');
 			$customer_info = $this->model_account_customer->getCustomer($this->customer->getId());

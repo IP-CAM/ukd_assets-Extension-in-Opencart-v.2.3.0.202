@@ -480,6 +480,12 @@ function createCardTokenCallback(token) {
 
 }
 
+function onFinishPayment(res){
+
+  //alert(res)
+
+}
+
 $('#cc_form select[name=installments]').change(function(event) {
 
     selected_installment = $(this).val();

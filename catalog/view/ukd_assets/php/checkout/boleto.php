@@ -9,6 +9,7 @@ function validate(){
 function startPayment() {
   process();
 }
+
 function onFinishPayment(res){
 
 }
