@@ -446,55 +446,21 @@ $('.datetime').datetimepicker({
 	pickTime: true
 });
 
-$('#collapse-payment-address select[name=\'country_id\']').on('change', function() {
-	$.ajax({
-		url: 'index.php?route=checkout/checkout/country&country_id=' + this.value,
-		dataType: 'json',
-		beforeSend: function() {
-			$('#collapse-payment-address select[name=\'country_id\']').after(' <i class="fa fa-circle-o-notch fa-spin"></i>');
-		},
-		complete: function() {
-			$('.fa-spin').remove();
-		},
-		success: function(json) {
-			if (json['postcode_required'] == '1') {
-				$('#collapse-payment-address input[name=\'postcode\']').parent().parent().addClass('required');
-			} else {
-				$('#collapse-payment-address input[name=\'postcode\']').parent().parent().removeClass('required');
-			}
-
-			html = '<option value=""><?php echo $text_select; ?></option>';
-
-			if (json['zone'] && json['zone'] != '') {
-				for (i = 0; i < json['zone'].length; i++) {
-					html += '<option value="' + json['zone'][i]['zone_id'] + '"';
-
-					if (json['zone'][i]['zone_id'] == '<?php echo $zone_id; ?>') {
-						html += ' selected="selected"';
-					}
-
-					html += '>' + json['zone'][i]['name'] + '</option>';
-				}
-			} else {
-				html += '<option value="0" selected="selected"><?php echo $text_none; ?></option>';
-			}
-
-			$('#collapse-payment-address select[name=\'zone_id\']').html(html);
-		},
-		error: function(xhr, ajaxOptions, thrownError) {
-			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-		}
-	});
-});
-
-//$('#collapse-payment-address select[name=\'country_id\']').trigger('change');
 
 //ukd
 
-<?php
-$form_name = 'guest_form' ;
-$collapse_name = '#collapse-payment-address' ;
-$button_name = '#button-guest' ;
-include_once 'catalog/view/ukd_assets/php/js/address_autofill.inc.php';
-?>
+var collapse_id = '#collapse-payment-address' ;
+var button_id = '#button-guest' ;
+
+$(document).delegate(button_id , 'click', function() {
+
+    $(collapse_id + ' .has-error').removeClass('has-error');
+
+})
+
+require(["mask"], function() {
+    $('.phone_mask').mask('(00) 000000000', {placeholder: "(DDD) Número do telefone"});
+    $('.postcode_mask').mask('00000000', {placeholder: "Somente números. Ex.: 42850000"});
+    getAddressByPostcode(collapse_id);
+});
 //--></script>

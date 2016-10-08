@@ -1,13 +1,22 @@
-//$('select[name=\'zone_id\']').val(<?php echo $zone_id ?>);
-
 function autofill(form) {
 
-    address_autofill($(form + 'input[name=\'postcode\']'));
+    $(form + ' input, ' + form + ' select').blur(function(event) {
+        window[form][$(this).attr('name')] = $(this).val();
+    });
 
-    $(form + 'input[name=\'postcode\']').keyup(function() {
+    if (!window[form]) {
+        window[form] = [];
+    } else {
+        for (i in window[form]) {
+            $(form + ' *[name=' + i + ']').val(window[form][i]);
+        }
+    }
+
+    address_autofill($(form + ' input[name=\'postcode\']'));
+
+    $(form + ' input[name=\'postcode\']').keyup(function() {
 
         address_autofill($(this));
-
 
     }).attr('maxlength', 8);
 
@@ -22,22 +31,22 @@ function autofill(form) {
                 success: function(json) {
 
                     if (json['logradouro']) {
-                        $(form +'input[name=\'address_1\']').val(json['logradouro']);
+                        $(form + 'input[name=\'address_1\']').val(json['logradouro']);
                     }
                     if (json['bairro']) {
-                        $(form + 'input[name=\'address_2\']').val(json['bairro']);
+                        $(form + ' input[name=\'address_2\']').val(json['bairro']);
                     }
 
                     if (json['localidade']) {
-                        $(form + 'input[name=\'city\']').val(json['localidade']).attr('readonly', true);
+                        $(form + ' input[name=\'city\']').val(json['localidade']).attr('readonly', true);
                     } else {
-                        $(form + 'input[name=\'city\']').attr('readonly', false);
+                        $(form + ' input[name=\'city\']').attr('readonly', false);
                     }
 
                     if (json['uf']) {
-                        $(form + 'select[name=\'zone_id\']').attr('readonly', true).find('option[data-sigla=' + json['uf'] + ']').prop('selected', true);
+                        $(form + ' select[name=\'zone_id\']').attr('readonly', true).find('option[data-sigla=' + json['uf'] + ']').prop('selected', true);
                     } else {
-                        $(form + 'select[name=\'zone_id\']').attr('readonly', false);
+                        $(form + ' select[name=\'zone_id\']').attr('readonly', false);
                     }
 
                 },
@@ -50,8 +59,8 @@ function autofill(form) {
                 }
             })
         } else {
-            $(form + 'input[name=\'city\']').val('').attr('readonly', false);
-            $(form + 'select[name=\'zone_id\']').attr('readonly', false).find('option[data-sigla=none]').prop('selected', true);
+            $(form + ' input[name=\'city\']').val('').attr('readonly', false);
+            $(form + ' select[name=\'zone_id\']').attr('readonly', false).find('option[data-sigla=none]').prop('selected', true);
         }
     }
 

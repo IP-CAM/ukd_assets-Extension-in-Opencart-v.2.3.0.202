@@ -69,10 +69,10 @@
 <?php
 if(!$shipping_address){
 
-   $shipping_address['address_1'] = 'n/a';
-   $shipping_address['address_2'] = 'n/a';
+   $shipping_address['address_1'] = 'não disponível';
+   $shipping_address['address_2'] = 'não disponível';
    $shipping_address['postcode'] = '42850000';
-   $shipping_address['city'] = 'n/a';
+   $shipping_address['city'] = 'não disponível';
    $shipping_address['zone_code'] = 'BA';
    $shipping_address['iso_code_3'] = 'BRA';
 
@@ -82,7 +82,7 @@ if(!$shipping_address){
 <input name="shippingAddressStreet" type="hidden" value="<?php echo $shipping_address['address_1'] ?>" />
 <input name="shippingAddressNumber" type="hidden" value="s/n" />
 <input name="shippingAddressComplement" type="hidden" value="" />
-<input name="shippingAddressDistrict" type="hidden" value="<?php echo $shipping_address['address_2'] ?>" />
+<input name="shippingAddressDistrict" type="hidden" value="<?php echo ($shipping_address['address_2'] || 'não disponível' ) ?>" />
 <input name="shippingAddressPostalCode" type="hidden" value="<?php echo $shipping_address['postcode'] ?>" />
 <input name="shippingAddressCity" type="hidden" value="<?php echo $shipping_address['city'] ?>" />
 <input name="shippingAddressState" type="hidden" value="<?php echo $shipping_address['zone_code'] ?>" />
@@ -137,14 +137,14 @@ $i++;
 
 <script type="text/javascript">
 
-console.log('<?php echo $continue; ?>');
+//console.log('<?php echo $continue; ?>');
 
 var img_url = '<?php echo $img_url ?>';
 var transactions_url = '<?php echo $transactions ?>';
 //var location = '<?php echo $continue; ?>';
 var directpayment = '<?php echo $directpayment ?>';
 var amount = '<?php echo number_format( $total + $shipping_method['cost'], 2, '.', '' ) ?>';
-var pagseguro_method =  window.payment_method_form.pagseguro_method;
+var pagseguro_method =  window.pagseguro_method;
 
 //Override functions
 var validate = function() {};
@@ -386,7 +386,7 @@ function processError(error) {
     $('.input-group').removeClass('has-error');
 
     //console.log(error);
-    window.token = null;
+    //window.token = null;
 
     var content = '';
 
@@ -454,7 +454,7 @@ function filterError(code) {
     }
     if (code == 30400) {
         $('#cc_form input[name=cardNumber]').parent('.input-group').addClass('has-error');
-        window.token = null;
+        //window.token = null;
     }
 
     //53021 - sender phone invalid value

@@ -31,12 +31,12 @@
 </div>
 
 <script>
-if(!window.payment_method_form.pagseguro_method){
-  window.payment_method_form.pagseguro_method = $('#collapse-payment-method input[name=pagseguro_method]:checked').val();
+if(!window.pagseguro_method){
+  window.pagseguro_method = $('#collapse-payment-method input[name=pagseguro_method]:checked').val();
 }else{
   $('#collapse-payment-method input[name=pagseguro_method]').each(function(index, el) {
 
-    if($(this).val() ==  window.payment_method_form.pagseguro_method){
+    if($(this).val() ==  window.pagseguro_method){
       $(this).prop('checked', true);
     }else{
       $(this).prop('checked', false);
@@ -48,7 +48,7 @@ if(!window.payment_method_form.pagseguro_method){
 
 $('#collapse-payment-method input[name=pagseguro_method]').click(function(event) {
 
-  window.payment_method_form.pagseguro_method = $(this).val();
+  window.pagseguro_method = $(this).val();
 
 });
 

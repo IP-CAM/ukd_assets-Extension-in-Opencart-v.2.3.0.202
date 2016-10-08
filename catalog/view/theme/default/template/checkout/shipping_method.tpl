@@ -34,12 +34,12 @@
 </div>
 
 <script>
-if(!window.shipping_method_form.shipping_method){
-  window.shipping_method_form.shipping_method = $('#collapse-shipping-method input[name=shipping_method]:checked').val();
+if(!window.shipping_method){
+  window.shipping_method = $('#collapse-shipping-method input[name=shipping_method]:checked').val();
 }else{
   $('#collapse-shipping-method input[name=shipping_method]').each(function(index, el) {
 
-    if($(this).val() ==  window.shipping_method_form.shipping_method){
+    if($(this).val() ==  window.shipping_method){
       $(this).prop('checked', true);
     }else{
       $(this).prop('checked', false);
@@ -51,7 +51,7 @@ if(!window.shipping_method_form.shipping_method){
 
 $('#collapse-shipping-method input[name=shipping_method]').click(function(event) {
 
-  window.shipping_method_form.shipping_method = $(this).val();
+  window.shipping_method = $(this).val();
 
 });
 

@@ -95,6 +95,8 @@
 window.customer = <?php echo $customer ?> ;
 window.ukd_fn = window.ukd_fn || [];
 window.ukd_fn.push(function() {
+//ukd_pagseguro
+require(["catalog/view/ukd_assets/js/checkout.js"], function(){
 $(document).on('change', 'input[name=\'account\']', function() {
 	if ($('#collapse-payment-address').parent().find('.panel-heading .panel-title > *').is('a')) {
 		if (this.value == 'register') {
@@ -807,70 +809,8 @@ $(document).delegate('#button-payment-method', 'click', function() {
     });
 });
 
-//ukd_pagseguro
-
-window.clps = [];
-
-$('.panel-title').each(function(i) {
-
-    $(this).data('id', i)
-
-    window.clps.push($(this));
-
-});
-
-$('.collapse').on('show.bs.collapse', function() {
-
-    var c = window.clps;
-
-    var id = $(this).parent('div').find('h4').data('id');
-
-    for (i in c) {
-        if (id < i && c[i].html().indexOf('<') == 0) {
-            c[i].find('a').css('pointer-events', 'none');
-            c[i].find('i').remove();
-        }
-
-    }
-
-});
-
-$('#collapse-checkout-confirm').on('hide.bs.collapse', function() {
-
-    $('#collapse-checkout-confirm .panel-body').empty();
-
 });
 
 });
-
-//dataset
-window.register_form = [];
-window.register_form.input = [];
-window.register_form.select = [];
-
-window.payment_form = [];
-window.payment_form.input = [];
-window.payment_form.select = [];
-
-window.shipping_form = [];
-window.shipping_form.input = [];
-window.shipping_form.select = [];
-
-window.guest_form = [];
-window.guest_form.input = [];
-window.guest_form.select = [];
-
-window.guest_shipping_form = [];
-window.guest_shipping_form.input = [];
-window.guest_shipping_form.select = [];
-
-window.shipping_method_form = [];
-window.shipping_method_form.shipping_method = null;
-
-window.payment_method_form = [];
-window.payment_method_form.pagseguro_method = null;
-
-window.token = null;
-
 //--></script>
 <?php echo $footer; ?>

@@ -1,4 +1,4 @@
-<form class="form-horizontal">
+<form id="guest-shipping-form" class="form-horizontal">
   <div class="form-group required">
     <label class="col-sm-2 control-label" for="input-shipping-firstname"><?php echo $entry_firstname; ?></label>
     <div class="col-sm-10">
@@ -317,17 +317,20 @@ $('#collapse-shipping-address select[name=\'country_id\']').on('change', functio
 
 //ukd
 
-/*  Load Mask Lib */
-require(["mask"], function() {
-  $('.phone_mask').mask('(00) 000000000', {placeholder: "(DDD) Número do telefone"});
-  //$('.postcode_mask').mask('00000000', {placeholder: "Somente números. Ex.: 42850000"});
+var collapse_id = '#guest-shipping-form' ;
+var button_id = '#button-guest-shipping' ;
+
+$(document).delegate(button_id , 'click', function() {
+
+    $(collapse_id + ' .has-error').removeClass('has-error');
+
 })
 
-<?php
-$form_name = 'guest_shipping_form' ;
-$collapse_name = '#collapse-shipping-address' ;
-$button_name = '#button-guest-shipping' ;
-include_once 'catalog/view/ukd_assets/php/js/address_autofill.inc.php';  ?>
+require(["mask"], function() {
+    $('.phone_mask').mask('(00) 000000000', {placeholder: "(DDD) Número do telefone"});
+    $('.postcode_mask').mask('00000000', {placeholder: "Somente números. Ex.: 42850000"});
+    getAddressByPostcode(collapse_id, false);
+});
 
 
 
