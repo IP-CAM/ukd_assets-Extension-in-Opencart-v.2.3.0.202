@@ -166,7 +166,7 @@
         <label class="control-label" for="input-payment-address-1"><?php echo $entry_address_1; ?></label>
         <input type="text" name="address_1" value="<?php echo $address_1; ?>" placeholder="<?php echo $entry_address_1; ?>" id="input-payment-address-1" class="form-control" />
       </div>
-      <div class="form-group required">
+      <div class="form-group">
         <label class="control-label" for="input-payment-address-2"><?php echo $entry_address_2; ?></label>
         <input type="text" name="address_2" value="<?php echo $address_2; ?>" placeholder="<?php echo $entry_address_2; ?>" id="input-payment-address-2" class="form-control" />
       </div>
@@ -182,7 +182,9 @@
       </div>
       <div class="form-group required">
         <label class="control-label" for="input-payment-zone"><?php echo $entry_zone; ?></label>
-        <?php include 'catalog/view/ukd_assets/html/zone_id.html' ?>
+        <select name="zone_id" id="input-payment-zone" class="form-control">
+          <?php include 'catalog/view/ukd_assets/html/zone_id.html' ?>
+        </select>
       </div>
       <?php foreach ($custom_fields as $custom_field) { ?>
       <?php if ($custom_field['location'] == 'address') { ?>
@@ -449,18 +451,16 @@ $('.datetime').datetimepicker({
 
 //ukd
 
-var collapse_id = '#collapse-payment-address' ;
+var form_id = '#collapse-payment-address' ;
 var button_id = '#button-guest' ;
 
 $(document).delegate(button_id , 'click', function() {
 
-    $(collapse_id + ' .has-error').removeClass('has-error');
+    $(form_id + ' .has-error').removeClass('has-error');
 
 })
 
-require(["mask"], function() {
-    $('.phone_mask').mask('(00) 000000000', {placeholder: "(DDD) Número do telefone"});
-    $('.postcode_mask').mask('00000000', {placeholder: "Somente números. Ex.: 42850000"});
-    getAddressByPostcode(collapse_id);
-});
+<?php
+require_once 'catalog/view/ukd_assets/js/validate-mask.inc.js';
+?>
 //--></script>

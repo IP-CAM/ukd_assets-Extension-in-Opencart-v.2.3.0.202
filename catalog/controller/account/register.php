@@ -353,6 +353,9 @@ class ControllerAccountRegister extends Controller {
 	}
 
 	private function validate() {
+
+		require_once 'catalog/view/ukd_assets/php/checkout/field-validation.ctrl.php';
+
 		if ((utf8_strlen(trim($this->request->post['firstname'])) < 1) || (utf8_strlen(trim($this->request->post['firstname'])) > 32)) {
 			$this->error['firstname'] = $this->language->get('error_firstname');
 		}
@@ -369,9 +372,9 @@ class ControllerAccountRegister extends Controller {
 			$this->error['warning'] = $this->language->get('error_exists');
 		}
 
-		if ((utf8_strlen($this->request->post['telephone']) < 3) || (utf8_strlen($this->request->post['telephone']) > 32)) {
-			$this->error['telephone'] = $this->language->get('error_telephone');
-		}
+		// if ((utf8_strlen($this->request->post['telephone']) < 3) || (utf8_strlen($this->request->post['telephone']) > 32)) {
+		// 	$this->error['telephone'] = $this->language->get('error_telephone');
+		// }
 
 		if ((utf8_strlen(trim($this->request->post['address_1'])) < 3) || (utf8_strlen(trim($this->request->post['address_1'])) > 128)) {
 			$this->error['address_1'] = $this->language->get('error_address_1');
@@ -380,6 +383,14 @@ class ControllerAccountRegister extends Controller {
 		if ((utf8_strlen(trim($this->request->post['city'])) < 2) || (utf8_strlen(trim($this->request->post['city'])) > 128)) {
 			$this->error['city'] = $this->language->get('error_city');
 		}
+
+		// if ((utf8_strlen(trim($this->request->post['postcode'])) != 8)) {
+		//   $json['error']['postcode'] = $this->language->get('error_postcode');
+		// }
+
+		// if ((utf8_strlen($this->request->post['telephone']) < 13) || (utf8_strlen($this->request->post['telephone']) > 32)) {
+		//   $json['error']['telephone'] = $this->language->get('error_telephone');
+		// }
 
 		$this->load->model('localisation/country');
 
@@ -410,6 +421,7 @@ class ControllerAccountRegister extends Controller {
 		$custom_fields = $this->model_account_custom_field->getCustomFields($customer_group_id);
 
 		foreach ($custom_fields as $custom_field) {
+			require_once 'catalog/view/ukd_assets/php/checkout/validation.ctrl.php';
             if ($custom_field['required'] && empty($this->request->post['custom_field'][$custom_field['location']][$custom_field['custom_field_id']])) {
 				$this->error['custom_field'][$custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
 			} elseif (($custom_field['type'] == 'text') && !empty($custom_field['validation']) && !filter_var($this->request->post['custom_field'][$custom_field['location']][$custom_field['custom_field_id']], FILTER_VALIDATE_REGEXP, array('options' => array('regexp' => $custom_field['validation'])))) {

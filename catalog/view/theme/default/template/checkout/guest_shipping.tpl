@@ -42,15 +42,17 @@
     </div>
   </div>
   <div class="form-group required hidden">
-    <label class="control-label" for="input-payment-country"><?php echo $entry_country; ?></label>
-    <select name="country_id" id="input-payment-country" class="form-control">
+    <label class="control-label" for="input-shipping-country"><?php echo $entry_country; ?></label>
+    <select name="country_id" id="input-shipping-country" class="form-control">
       <option value="30" selected="selected">Brasil</option>
     </select>
   </div>
   <div class="form-group required">
-    <label class="col-sm-2 control-label"  for="input-payment-zone"><?php echo $entry_zone; ?></label>
+    <label class="col-sm-2 control-label"  for="input-shipping-zone"><?php echo $entry_zone; ?></label>
     <div class="col-sm-10">
-      <?php include 'catalog/view/ukd_assets/html/zone_id.html' ?>
+      <select name="zone_id" id="input-shipping-zone" class="form-control">
+        <?php include 'catalog/view/ukd_assets/html/zone_id.html' ?>
+      </select>
     </div>
   </div>
   <?php foreach ($custom_fields as $custom_field) { ?>
@@ -271,67 +273,20 @@ $('.datetime').datetimepicker({
 	pickTime: true
 });
 
-$('#collapse-shipping-address select[name=\'country_id\']').on('change', function() {
-	$.ajax({
-		url: 'index.php?route=checkout/checkout/country&country_id=' + this.value,
-		dataType: 'json',
-		beforeSend: function() {
-			$('#collapse-shipping-address select[name=\'country_id\']').after(' <i class="fa fa-circle-o-notch fa-spin"></i>');
-		},
-		complete: function() {
-			$('.fa-spin').remove();
-		},
-		success: function(json) {
-			if (json['postcode_required'] == '1') {
-				$('#collapse-shipping-address input[name=\'postcode\']').parent().parent().addClass('required');
-			} else {
-				$('#collapse-shipping-address input[name=\'postcode\']').parent().parent().removeClass('required');
-			}
-
-			html = '<option value=""><?php echo $text_select; ?></option>';
-
-			if (json['zone'] && json['zone'] != '') {
-				for (i = 0; i < json['zone'].length; i++) {
-					html += '<option value="' + json['zone'][i]['zone_id'] + '"';
-
-					if (json['zone'][i]['zone_id'] == '<?php echo $zone_id; ?>') {
-						html += ' selected="selected"';
-          			}
-
-					html += '>' + json['zone'][i]['name'] + '</option>';
-				}
-			} else {
-				html += '<option value="0" selected="selected"><?php echo $text_none; ?></option>';
-			}
-
-			$('#collapse-shipping-address select[name=\'zone_id\']').html(html);
-		},
-		error: function(xhr, ajaxOptions, thrownError) {
-			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-		}
-	});
-});
-
-
 //$('#collapse-shipping-address select[name=\'country_id\']').trigger('change');
 
 //ukd
 
-var collapse_id = '#guest-shipping-form' ;
+var form_id = '#guest-shipping-form' ;
 var button_id = '#button-guest-shipping' ;
 
 $(document).delegate(button_id , 'click', function() {
 
-    $(collapse_id + ' .has-error').removeClass('has-error');
+    $(form_id + ' .has-error').removeClass('has-error');
 
 })
 
-require(["mask"], function() {
-    $('.phone_mask').mask('(00) 000000000', {placeholder: "(DDD) Número do telefone"});
-    $('.postcode_mask').mask('00000000', {placeholder: "Somente números. Ex.: 42850000"});
-    getAddressByPostcode(collapse_id, false);
-});
-
-
-
+<?php
+require_once 'catalog/view/ukd_assets/js/validate-mask.inc.js';
+?>
 //--></script>

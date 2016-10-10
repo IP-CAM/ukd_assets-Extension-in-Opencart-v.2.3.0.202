@@ -1,4 +1,4 @@
-<div class="row">
+<div id='form-account' class="row">
   <div class="col-sm-6">
     <fieldset id="account">
       <legend><?php echo $text_your_details; ?></legend>
@@ -177,7 +177,9 @@
       </div>
       <div class="form-group required">
         <label class="control-label" for="input-payment-zone"><?php echo $entry_zone; ?></label>
-        <?php include 'catalog/view/ukd_assets/html/zone_id.html' ?>
+        <select name="zone_id" id="input-payment-zone" class="form-control">
+          <?php include 'catalog/view/ukd_assets/html/zone_id.html' ?>
+        </select>
       </div>
       <?php foreach ($custom_fields as $custom_field) { ?>
       <?php if ($custom_field['location'] == 'address') { ?>
@@ -477,11 +479,8 @@ $('#collapse-payment-address select[name=\'country_id\']').on('change', function
 
 //$('#collapse-payment-address select[name=\'country_id\']').trigger('change');
 
-//ukd
+form_id = '#form-account';
 <?php
-$form_name = 'register_form' ;
-$collapse_name = '#collapse-payment-address' ;
-$button_name = '#button-register' ;
-include_once 'catalog/view/ukd_assets/php/js/address_autofill.inc.php';
+require_once 'catalog/view/ukd_assets/js/validate-mask.inc.js';
 ?>
 //--></script>

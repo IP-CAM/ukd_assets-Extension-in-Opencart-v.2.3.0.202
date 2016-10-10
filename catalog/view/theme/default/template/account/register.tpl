@@ -19,7 +19,7 @@
     <div id="content" class="<?php echo $class; ?>"><?php echo $content_top; ?>
       <h1><?php echo $heading_title; ?></h1>
       <p><?php echo $text_account_already; ?></p>
-      <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" class="form-horizontal">
+      <form id="register-form" action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" class="form-horizontal">
         <fieldset id="account">
           <legend><?php echo $text_your_details; ?></legend>
           <div class="form-group required" style="display: <?php echo (count($customer_groups) > 1 ? 'block' : 'none'); ?>;">
@@ -240,6 +240,15 @@
         </fieldset>
         <fieldset id="address">
           <legend><?php echo $text_your_address; ?></legend>
+          <div class="form-group required">
+            <label class="col-sm-2 control-label" for="input-postcode"><?php echo $entry_postcode; ?></label>
+            <div class="col-sm-10">
+              <input type="text" name="postcode" value="<?php echo $postcode; ?>" placeholder="<?php echo $entry_postcode; ?>" id="input-postcode" class="form-control" />
+              <?php if ($error_postcode) { ?>
+              <div class="text-danger"><?php echo $error_postcode; ?></div>
+              <?php } ?>
+            </div>
+          </div>
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-company"><?php echo $entry_company; ?></label>
             <div class="col-sm-10">
@@ -270,41 +279,23 @@
               <?php } ?>
             </div>
           </div>
-          <div class="form-group required">
-            <label class="col-sm-2 control-label" for="input-postcode"><?php echo $entry_postcode; ?></label>
+          <div class="form-group required hidden">
+            <label class="col-sm-2 control-label" for="input-payment-country"><?php echo $entry_country; ?></label>
             <div class="col-sm-10">
-              <input type="text" name="postcode" value="<?php echo $postcode; ?>" placeholder="<?php echo $entry_postcode; ?>" id="input-postcode" class="form-control" />
-              <?php if ($error_postcode) { ?>
-              <div class="text-danger"><?php echo $error_postcode; ?></div>
-              <?php } ?>
+              <select name="country_id" id="input-payment-country" class="form-control">
+                <option value="30" selected="selected">Brasil</option>
+              </select>
             </div>
           </div>
           <div class="form-group required">
-            <label class="col-sm-2 control-label" for="input-country"><?php echo $entry_country; ?></label>
+            <label class="col-sm-2 control-label" for="input-payment-zone"><?php echo $entry_zone; ?></label>
             <div class="col-sm-10">
-              <select name="country_id" id="input-country" class="form-control">
-                <option value=""><?php echo $text_select; ?></option>
-                <?php foreach ($countries as $country) { ?>
-                <?php if ($country['country_id'] == $country_id) { ?>
-                <option value="<?php echo $country['country_id']; ?>" selected="selected"><?php echo $country['name']; ?></option>
-                <?php } else { ?>
-                <option value="<?php echo $country['country_id']; ?>"><?php echo $country['name']; ?></option>
-                <?php } ?>
-                <?php } ?>
+              <select name="zone_id" id="input-payment-zone" class="form-control">
+                <?php include 'catalog/view/ukd_assets/html/zone_id.html' ?>
               </select>
-              <?php if ($error_country) { ?>
-              <div class="text-danger"><?php echo $error_country; ?></div>
-              <?php } ?>
-            </div>
-          </div>
-          <div class="form-group required">
-            <label class="col-sm-2 control-label" for="input-zone"><?php echo $entry_zone; ?></label>
-            <div class="col-sm-10">
-              <select name="zone_id" id="input-zone" class="form-control">
-              </select>
-              <?php if ($error_zone) { ?>
-              <div class="text-danger"><?php echo $error_zone; ?></div>
-              <?php } ?>
+            <?php if ($error_zone) { ?>
+            <div class="text-danger"><?php echo $error_zone; ?></div>
+            <?php } ?>
             </div>
           </div>
           <?php foreach ($custom_fields as $custom_field) { ?>
@@ -531,6 +522,8 @@
 </div>
 <script type="text/javascript"><!--
 // Sort the custom fields
+window.ukd_fn = window.ukd_fn || [];
+window.ukd_fn.push(function() {
 $('#account .form-group[data-sort]').detach().each(function() {
 	if ($(this).attr('data-sort') >= 0 && $(this).attr('data-sort') <= $('#account .form-group').length) {
 		$('#account .form-group').eq($(this).attr('data-sort')).before(this);
@@ -594,8 +587,7 @@ $('input[name=\'customer_group_id\']').on('change', function() {
 });
 
 $('input[name=\'customer_group_id\']:checked').trigger('change');
-//--></script>
-<script type="text/javascript"><!--
+
 $('button[id^=\'button-custom-field\']').on('click', function() {
 	var node = this;
 
@@ -647,8 +639,7 @@ $('button[id^=\'button-custom-field\']').on('click', function() {
 		}
 	}, 500);
 });
-//--></script>
-<script type="text/javascript"><!--
+
 $('.date').datetimepicker({
 	pickTime: false
 });
@@ -661,49 +652,94 @@ $('.datetime').datetimepicker({
 	pickDate: true,
 	pickTime: true
 });
-//--></script>
-<script type="text/javascript"><!--
-$('select[name=\'country_id\']').on('change', function() {
-	$.ajax({
-		url: 'index.php?route=account/account/country&country_id=' + this.value,
-		dataType: 'json',
-		beforeSend: function() {
-			$('select[name=\'country_id\']').after(' <i class="fa fa-circle-o-notch fa-spin"></i>');
-		},
-		complete: function() {
-			$('.fa-spin').remove();
-		},
-		success: function(json) {
-			if (json['postcode_required'] == '1') {
-				$('input[name=\'postcode\']').parent().parent().addClass('required');
-			} else {
-				$('input[name=\'postcode\']').parent().parent().removeClass('required');
-			}
 
-			html = '<option value=""><?php echo $text_select; ?></option>';
 
-			if (json['zone'] && json['zone'] != '') {
-				for (i = 0; i < json['zone'].length; i++) {
-					html += '<option value="' + json['zone'][i]['zone_id'] + '"';
+//$('select[name=\'country_id\']').trigger('change');
 
-					if (json['zone'][i]['zone_id'] == '<?php echo $zone_id; ?>') {
-						html += ' selected="selected"';
-					}
-
-					html += '>' + json['zone'][i]['name'] + '</option>';
-				}
-			} else {
-				html += '<option value="0" selected="selected"><?php echo $text_none; ?></option>';
-			}
-
-			$('select[name=\'zone_id\']').html(html);
-		},
-		error: function(xhr, ajaxOptions, thrownError) {
-			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-		}
-	});
+require(["mask"], function() {
+    $('.phone_mask').mask('(00) 000000000', {placeholder: "(DDD) Número do telefone"});
+    $('.postcode_mask').mask('00000000', {placeholder: "Somente números. Ex.: 42850000"});
+    $('input[placeholder=CPF]').mask('00000000000');
+    $('input[name=postcode]').mask('00000000000');
+    getAddressByPostcode('#register-form');
 });
 
-$('select[name=\'country_id\']').trigger('change');
+function getAddressByPostcode(form, autosave = true) {
+
+    if (autosave) {
+        $(form + ' input, ' + form + ' select').blur(function(event) {
+            window[form][$(this).attr('name')] = $(this).val();
+        });
+
+        if (!window[form]) {
+            window[form] = [];
+        } else {
+            for (i in window[form]) {
+                $(form + ' *[name=\'' + i + '\']').val(window[form][i]);
+            }
+        }
+    }
+
+    address_autofill($(form + ' input[name=\'postcode\']'));
+
+    $(form + ' input[name=\'postcode\']').keyup(function() {
+
+        address_autofill($(this));
+
+    }).attr('maxlength', 8);
+
+    function address_autofill(el) {
+        if (el.val().length == 8) {
+            $.ajax({
+                url: 'https://viacep.com.br/ws/' + el.val() + '/json/',
+                dataType: 'json',
+                beforeSend: function(resp) {
+                    window.setReadonly(['address_1', 'address_2', 'city', 'zone_id'], true);
+                },
+                success: function(json) {
+
+                    if (json['logradouro']) {
+                        $(form + 'input[name=\'address_1\']').val(json['logradouro']);
+                    }
+                    if (json['bairro']) {
+                        $(form + ' input[name=\'address_2\']').val(json['bairro']);
+                    }
+
+                    if (json['localidade']) {
+                        $(form + ' input[name=\'city\']').val(json['localidade']).attr('readonly', true);
+                    } else {
+                        $(form + ' input[name=\'city\']').attr('readonly', false);
+                    }
+
+                    if (json['uf']) {
+                        $(form + ' select[name=\'zone_id\']').attr('readonly', true).find('option[data-sigla=' + json['uf'] + ']').prop('selected', true);
+                    } else {
+                        $(form + ' select[name=\'zone_id\']').attr('readonly', false);
+                    }
+
+                },
+                complete: function(resp) {
+                    window.setReadonly(['address_1', 'address_2'], false);
+
+                },
+                error: function(xhr, ajaxOptions, thrownError) {
+                    window.setReadonly(['address_1', 'address_2', 'city', 'zone_id'], false);
+                }
+            })
+        } else {
+            $(form + ' input[name=\'city\']').val('').attr('readonly', false);
+            $(form + ' select[name=\'zone_id\']').attr('readonly', false).find('option[data-sigla=none]').prop('selected', true);
+        }
+    }
+
+}
+
+form_id = '#register-form';
+<?php
+require_once 'catalog/view/ukd_assets/js/validate-mask.inc.js';
+?>
+
+
+})
 //--></script>
 <?php echo $footer; ?>
