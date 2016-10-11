@@ -113,6 +113,9 @@ class ControllerCheckoutGuestShipping extends Controller {
 		}
 
 		if (!$json) {
+			
+			require 'catalog/view/ukd_assets/php/checkout/field-validation.ctrl.php'; //ukd
+
 			if ((utf8_strlen(trim($this->request->post['firstname'])) < 1) || (utf8_strlen(trim($this->request->post['firstname'])) > 32)) {
 				$json['error']['firstname'] = $this->language->get('error_firstname');
 			}

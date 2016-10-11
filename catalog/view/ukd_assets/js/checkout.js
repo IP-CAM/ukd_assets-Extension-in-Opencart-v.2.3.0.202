@@ -33,6 +33,8 @@ $('#collapse-checkout-confirm').on('hide.bs.collapse', function() {
 
 function getAddressByPostcode(form, autosave = true) {
 
+    address_autofill($(form + ' input[name=\'postcode\']'));
+
     if (autosave) {
         $(form + ' input, ' + form + ' select').blur(function(event) {
             window[form][$(this).attr('name')] = $(this).val();
@@ -46,8 +48,6 @@ function getAddressByPostcode(form, autosave = true) {
             }
         }
     }
-
-    address_autofill($(form + ' input[name=\'postcode\']'));
 
     $(form + ' input[name=\'postcode\']').keyup(function() {
 
@@ -66,7 +66,7 @@ function getAddressByPostcode(form, autosave = true) {
                 success: function(json) {
 
                     if (json['logradouro']) {
-                        $(form + 'input[name=\'address_1\']').val(json['logradouro']);
+                        $(form + ' input[name=\'address_1\']').val(json['logradouro']);
                     }
                     if (json['bairro']) {
                         $(form + ' input[name=\'address_2\']').val(json['bairro']);

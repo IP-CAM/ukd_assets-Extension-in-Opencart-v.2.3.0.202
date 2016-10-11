@@ -13,7 +13,7 @@ if ((utf8_strlen(trim($this->request->post['postcode'])) != 8)) {
   if($isValidate)$this->error['postcode'] = $this->language->get('error_postcode');
 }
 
-if ((utf8_strlen($this->request->post['telephone']) < 13) || (utf8_strlen($this->request->post['telephone']) > 32)) {
+if (isset($this->request->post['telephone']) && (utf8_strlen($this->request->post['telephone']) < 13 || utf8_strlen($this->request->post['telephone']) > 32)) {
   $json['error']['telephone'] = 'Telefone inválido';
   if($isValidate)$this->error['telephone'] ='Telefone inválido';
 }
