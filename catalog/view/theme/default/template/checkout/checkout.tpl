@@ -87,9 +87,7 @@
       </div>
       <?php echo $content_bottom; ?></div>
     <?php echo $column_right; ?></div>
-</div><a id="golink" href="http://www.w3schools.com/" target="_blank">Visit W3Schools!</a>
-
-<a id="myLink2" onclick="document.getElementById('golink').click()">Click link 1</a>
+</div>
 
 <script type="text/javascript"><!--
 window.customer = <?php echo $customer ?> ;
@@ -809,7 +807,9 @@ $(document).delegate('#button-payment-method', 'click', function() {
 });
 
 });
-
 });
+<?php
+require_once 'catalog/view/ukd_assets/js/getAddressByPostalcode.inc.js';
+?>
 //--></script>
 <?php echo $footer; ?>

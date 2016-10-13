@@ -53,7 +53,7 @@ require(["common"], function() {
 
 window.setReadonly = function(o, s) {
     for (i in o) {
-        $('*[name=\'' + i + '\']').attr('readonly', s);
+        $('*[name=\'' + i + '\']').attr('disabled', s);
     }
 }
 
