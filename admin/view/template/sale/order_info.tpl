@@ -16,12 +16,12 @@
       <div class="col-md-4">
         <div class="panel panel-default">
           <div class="panel-heading">
-            <h3 class="panel-title"><i class="fa fa-shopping-cart"></i> <?php echo $text_order_detail; ?></h3>
+            <h3 class="panel-title"><i class="fa fa-shopping-bag"></i> <?php echo $text_order_detail; ?></h3>
           </div>
           <table class="table">
             <tbody>
               <tr>
-                <td style="width: 1%;"><button data-toggle="tooltip" title="<?php echo $text_store; ?>" class="btn btn-info btn-xs"><i class="fa fa-shopping-cart fa-fw"></i></button></td>
+                <td style="width: 1%;"><button data-toggle="tooltip" title="<?php echo $text_store; ?>" class="btn btn-info btn-xs"><i class="fa fa-shopping-bag fa-fw"></i></button></td>
                 <td><a href="<?php echo $store_url; ?>" target="_blank"><?php echo $store_name; ?></a></td>
               </tr>
               <tr>
@@ -651,6 +651,6 @@ $(document).ready(function() {
 $('select[name="order_status_id"]').change(function(){
 	changeStatus();
 });
-//--></script> 
+//--></script>
 </div>
-<?php echo $footer; ?> 
+<?php echo $footer; ?>

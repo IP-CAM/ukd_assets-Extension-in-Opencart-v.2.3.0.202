@@ -46,7 +46,7 @@
             <div class="col-md-6">
               <div class="panel panel-default">
                 <div class="panel-heading">
-                  <h3 class="panel-title"><i class="fa fa-shopping-cart"></i> <?php echo $text_shipping_address; ?></h3>
+                  <h3 class="panel-title"><i class="fa fa-shopping-bag"></i> <?php echo $text_shipping_address; ?></h3>
                 </div>
                 <table class="table">
                   <tbody>
@@ -64,7 +64,7 @@
                 </div>
                 <table class="table">
                   <tr>
-                    <td><button data-toggle="tooltip" title="<?php echo $text_opencart_order; ?>" class="btn btn-info btn-xs"><i class="fa fa-shopping-cart fa-fw"></i></button></td>
+                    <td><button data-toggle="tooltip" title="<?php echo $text_opencart_order; ?>" class="btn btn-info btn-xs"><i class="fa fa-shopping-bag fa-fw"></i></button></td>
                     <td><a href="<?php echo $order_link; ?>"><?php echo $order_id; ?></a></td>
                   </tr>
                   <tr>

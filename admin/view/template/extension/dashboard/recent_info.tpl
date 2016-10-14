@@ -1,6 +1,6 @@
 <div class="panel panel-default">
   <div class="panel-heading">
-    <h3 class="panel-title"><i class="fa fa-shopping-cart"></i> <?php echo $heading_title; ?></h3>
+    <h3 class="panel-title"><i class="fa fa-shopping-bag"></i> <?php echo $heading_title; ?></h3>
   </div>
   <div class="table-responsive">
     <table class="table">
