@@ -205,4 +205,6 @@ addressForm('<?php echo $id ?>')
 
 getAddressByPostcode('#form-' + '<?php echo $id ?>');
 
+window.shippingAddressComplement = $('#form-<?php echo $id ?> input[placeholder=Complemento]').val();
+
 </script>

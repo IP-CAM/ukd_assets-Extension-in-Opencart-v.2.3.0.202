@@ -1,4 +1,11 @@
 <?php echo $header; ?>
+<style>
+#content button.btn, #content input.btn{
+
+  padding: 12px;
+
+}
+</style>
 <div class="container">
   <ul class="breadcrumb">
     <?php foreach ($breadcrumbs as $breadcrumb) { ?>
@@ -29,11 +36,7 @@
     <?php $class = 'col-sm-12'; ?>
     <?php } ?>
     <div id="content" class="<?php echo $class; ?>"><?php echo $content_top; ?>
-      <h1><?php echo $heading_title; ?>
-        <?php if ($weight) { ?>
-        &nbsp;(<?php echo $weight; ?>)
-        <?php } ?>
-      </h1>
+      <h1><?php echo $heading_title; ?></h1>
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data">
         <div class="table-responsive">
           <table class="table table-bordered">
@@ -102,7 +105,7 @@
       </form>
       <?php if ($modules) { ?>
       <h2><?php echo $text_next; ?></h2>
-      <p><?php echo $text_next_choice; ?></p>
+      <p><?php echo $text_next_choice ?></p>
       <div class="panel-group" id="accordion">
         <?php foreach ($modules as $module) { ?>
         <?php echo $module; ?>

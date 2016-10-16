@@ -280,6 +280,8 @@ $('.datetime').datetimepicker({
 var form_id = '#guest-shipping-form' ;
 var button_id = '#button-guest-shipping' ;
 
+window.shippingAddressComplement = $(form_id + ' input[placeholder=Complemento]').val();
+
 $(document).delegate(button_id , 'click', function() {
 
     $(form_id + ' .has-error').removeClass('has-error');

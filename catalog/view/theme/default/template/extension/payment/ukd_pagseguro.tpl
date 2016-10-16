@@ -16,10 +16,10 @@
 </div>
 
 <div class="buttons">
-  <div class="pull-right">
-    <input type="button" value="<?php echo $button_confirm; ?>" id="button-confirm" class="btn btn-primary" data-loading-text="<?php echo $text_loading; ?>" />
-  </div>
-  <input data-toggle="modal" data-target="#processModal" type="button" value="<?php echo $button_confirm; ?>" id="button-confirm" class="btn btn-primary" data-loading-text="<?php echo $text_loading; ?>" />
+  <center>
+    <input type="button" value="<?php echo $button_confirm; ?>" id="button-confirm" class="btn btn-success btn-lg" data-loading-text="<?php echo $text_loading; ?>" />
+  </center>
+  <!-- <input data-toggle="modal" data-target="#processModal" type="button" value="<?php echo $button_confirm; ?>" id="button-confirm" class="btn btn-primary" data-loading-text="<?php echo $text_loading; ?>" /> -->
 </div>
 </div>
 
@@ -67,22 +67,46 @@
 <!--debito online-->
 
 <?php
+$address_number = 's/n';
+
 if(!$shipping_address){
 
-   $shipping_address['address_1'] = 'não disponível';
-   $shipping_address['address_2'] = 'não disponível';
-   $shipping_address['postcode'] = '42850000';
-   $shipping_address['city'] = 'não disponível';
+   $shipping_address['address_1'] = 'n/a';
+   $shipping_address['address_2'] = 'n/a';
+   $address_number = 'n/a';
+   $shipping_address['postcode'] = '00000000';
+   $shipping_address['city'] = 'n/a';
    $shipping_address['zone_code'] = 'BA';
    $shipping_address['iso_code_3'] = 'BRA';
 
+} else {
+
+  $address = explode(',', $shipping_address['address_1']);
+
+  $shipping_address['address_1'] = $address[0];
+
+  if(isset( $address[1] ) ){
+
+    $address_number =  $address[1];
+
+  }
+
+
+  if(!$shipping_address['address_2']){
+
+    $shipping_address['address_2'] = 'não disponível';
+
+  }
+
 }
+
+//print_r($shipping_address);
 ?>
 
 <input name="shippingAddressStreet" type="hidden" value="<?php echo $shipping_address['address_1'] ?>" />
-<input name="shippingAddressNumber" type="hidden" value="s/n" />
+<input name="shippingAddressNumber" type="hidden" value="<?php echo $address_number ?>" />
 <input name="shippingAddressComplement" type="hidden" value="" />
-<input name="shippingAddressDistrict" type="hidden" value="<?php echo ($shipping_address['address_2'] || 'não disponível' ) ?>" />
+<input name="shippingAddressDistrict" type="hidden" value="<?php echo $shipping_address['address_2']  ?>" />
 <input name="shippingAddressPostalCode" type="hidden" value="<?php echo $shipping_address['postcode'] ?>" />
 <input name="shippingAddressCity" type="hidden" value="<?php echo $shipping_address['city'] ?>" />
 <input name="shippingAddressState" type="hidden" value="<?php echo $shipping_address['zone_code'] ?>" />
@@ -141,10 +165,12 @@ $i++;
 
 var img_url = '<?php echo $img_url ?>';
 var transactions_url = '<?php echo $transactions ?>';
-//var location = '<?php echo $continue; ?>';
+var locationURL = '<?php echo $continue; ?>';
 var directpayment = '<?php echo $directpayment ?>';
 var amount = '<?php echo number_format( $total + $shipping_method['cost'], 2, '.', '' ) ?>';
 var pagseguro_method =  window.pagseguro_method;
+
+$('#form_pagseguro input[name="shippingAddressComplement"]').val(window.shippingAddressComplement);
 
 //Override functions
 var validate = function() {};

@@ -15,21 +15,30 @@ $('.collapse').on('show.bs.collapse', function() {
     var id = $(this).parent('div').find('h4').data('id');
 
     for (i in c) {
-        if (id < i && c[i].html().indexOf('<') == 0) {
-            c[i].parent('div').css('background', '#fff');
+    //  if (id < i && c[i].html().indexOf('<') == 0) {
+        if (id < i ) {
+            c[i].parent('div').css('background', '#fff').css('color', '#aaa');
             c[i].find('a').css('pointer-events', 'none');
             c[i].find('i').remove();
-
         }
     }
 
-    $(this).parent().find('.panel-heading').css('background', '#cef');
+    $(this).parent().find('.panel-heading').css('background', '#cef').css('color', '#000');
+
+
+    //console.log(c[id+1].scrollTop());
+
+
+    if(c[id-1] && c[id+1])$(window).scrollTo(c[id-1].parent(),  { duration: 200});
+
+
 
 });
 
 $('#collapse-checkout-confirm').on('hide.bs.collapse', function() {
 
     $('#collapse-checkout-confirm .panel-body').empty();
+
 
 });
 

@@ -809,7 +809,7 @@ $(document).delegate('#button-payment-method', 'click', function() {
 });
 });
 <?php
-require_once 'catalog/view/ukd_assets/js/getAddressByPostalcode.inc.js';
+require_once 'catalog/view/ukd_assets/js/getAddressByPostcode.inc.js';
 ?>
 //--></script>
 <?php echo $footer; ?>

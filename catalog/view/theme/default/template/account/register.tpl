@@ -667,7 +667,7 @@ require(["mask"], function() {
 
 form_id = '#register-form';
 <?php
-require_once 'catalog/view/ukd_assets/js/getAddressByPostalcode.inc.js';
+require_once 'catalog/view/ukd_assets/js/getAddressByPostcode.inc.js';
 require_once 'catalog/view/ukd_assets/js/validate-mask.inc.js';
 ?>
 
