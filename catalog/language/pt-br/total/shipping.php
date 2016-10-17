@@ -4,7 +4,7 @@ $_['heading_title']        = 'Calcular frete';
 
 // Text
 $_['text_success']         = 'O frete foi utilizado com sucesso!';
-$_['text_shipping']        = 'Insira o seu destino para obter uma estimativa do frete.';
+$_['text_shipping']        = 'Insira o CEP ou o Estado de destino para obter uma estimativa do frete.';
 $_['text_shipping_method'] = 'Selecione o frete que deseja utilizar.';
 
 // Entry

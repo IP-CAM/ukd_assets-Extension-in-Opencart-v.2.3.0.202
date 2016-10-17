@@ -42,6 +42,18 @@
         window.ukd_fn = window.ukd_fn || [];
         window.ukd_fn.push(function() {
 
+          require(["mask"], function() {
+
+              $('input[name=postcode]').mask('00000000', {placeholder: "Somente números. Ex.: 01031970"});
+
+          });
+
+          $('select[name=\'zone_id\']').change(function(event) {
+
+            $('input[name=\'postcode\']').val('');
+
+          });
+
             $('#button-quote').on('click', function() {
 
               var postcode = $('input[name=\'postcode\']').val();
@@ -50,10 +62,20 @@
                 postcode = '00000000';
               }
 
+              if(!$('select[name=\'zone_id\']').val()){
+
+                var zone_id = 'none';
+
+              }else{
+
+                var zone_id =  $('select[name=\'zone_id\']').val();
+
+              }
+
               $.ajax({
                 url: 'index.php?route=extension/total/shipping/quote',
                 type: 'post',
-                data: 'country_id=' + $('select[name=\'country_id\']').val() + '&zone_id=' + $('select[name=\'zone_id\']').val() + '&postcode=' + encodeURIComponent(postcode),
+                data: 'country_id=' + $('select[name=\'country_id\']').val() + '&zone_id=' + zone_id + '&postcode=' + encodeURIComponent(postcode),
                 dataType: 'json',
                 beforeSend: function() {
                   $('#button-quote').button('loading');

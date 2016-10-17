@@ -26,10 +26,19 @@ $('.collapse').on('show.bs.collapse', function() {
     $(this).parent().find('.panel-heading').css('background', '#cef').css('color', '#000');
 
 
-    //console.log(c[id+1].scrollTop());
+    //SCROLL TO NEXT PANEL
+    if($(this).attr('id') != 'collapse-payment-address' && $('input[name="shipping_address"]:checked').val()){
+
+      if(c[id-2])$(window).scrollTo(c[id-2].parent(),  { duration: 200});
+
+    }else{
+
+      if(c[id-1] && c[id+1])$(window).scrollTo(c[id-1].parent(),  { duration: 200});
+
+    }
 
 
-    if(c[id-1] && c[id+1])$(window).scrollTo(c[id-1].parent(),  { duration: 200});
+
 
 
 

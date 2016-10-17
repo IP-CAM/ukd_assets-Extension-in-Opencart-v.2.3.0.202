@@ -59,7 +59,6 @@ class ModelExtensionShippingUkdCorreios extends Model
         $this->status = $status;
 
         return $this->getCep($cep_dest);
-
     }
 
     public function getCep($cep_dest)
@@ -82,26 +81,30 @@ class ModelExtensionShippingUkdCorreios extends Model
 
             $cep_dest = $this->getCepByZoneId($this->zone_id);
 
-            return $this->getCep($cep_dest);
+            if ($cep_dest) {
+                $resp = $this->getCep($cep_dest);
+            } else {
+                $resp = [
+                    'code' => 'ukd_correios',
+                    'title' => 'Não é possível entregar neste endereço.',
+                    'quote' => [],
+                    'sort_order' => $this->config->get('ukd_correios_sort_order'),
+                    'error' => false,
+                ];
+            }
 
-            // return $method_data = [
-            //   'code' => 'ukd_correios',
-            //   'title' => 'Não é possível entregar neste endereço.',
-            //   'quote' => [],
-            //   'sort_order' => $this->config->get('ukd_correios_sort_order'),
-            //   'error' => false,
-            // ];
+            return $resp;
+
         } elseif (isset($frete['error'])) {
             $status = false;
-            // $cep_dest = $this->getCepByZoneId($this->zone_id);
-            // return $this->getCep($cep_dest);
+
             return $method_data = [
-            'code' => 'ukd_correios',
-            'title' => 'Erro na conexão',
-            'quote' => [],
-            'sort_order' => $this->config->get('ukd_correios_sort_order'),
-            'error' => true,
-          ];
+                'code' => 'ukd_correios',
+                'title' => 'Não é possível acessar o sistema do Correios.',
+                'quote' => [],
+                'sort_order' => $this->config->get('ukd_correios_sort_order'),
+                'error' => true,
+            ];
         }
 
         $method_data = [];
@@ -148,59 +151,59 @@ class ModelExtensionShippingUkdCorreios extends Model
     public function getCepByZoneId($zone_id)
     {
         if ($zone_id == '440') { //AC
-            $cep = '69900052';
+            $cep = '69901010';
         } elseif ($zone_id == '441') { //AL
-            $cep = '57020755';
+            $cep = '57020970';
         } elseif ($zone_id == '442') { //AP
-            $cep = '68900040';
+            $cep = '68906970';
         } elseif ($zone_id == '443') { //AM
             $cep = '69020263';
         } elseif ($zone_id == '444') { //BA
-            $cep = '40020176';
+            $cep = '40015970';
         } elseif ($zone_id == '445') { //CE
-            $cep = '60110270';
+            $cep = '60030970';
         } elseif ($zone_id == '446') { //DF
-            $cep = '71255010';
+            $cep = '70040976';
         } elseif ($zone_id == '447') { //ES
-            $cep = '29016020';
+            $cep = '29001970';
         } elseif ($zone_id == '448') { //GO
-            $cep = '74020180';
+            $cep = '74001970';
         } elseif ($zone_id == '449') { //MA
-            $cep = '65010050';
+            $cep = '69010970';
         } elseif ($zone_id == '450') { //MT
             $cep = '78005970';
         } elseif ($zone_id == '451') { //MS
-            $cep = '79002072';
+            $cep = '79002970';
         } elseif ($zone_id == '452') { //MG
-            $cep = '30170000';
+            $cep = '30190973';
         } elseif ($zone_id == '453') { //PA
-            $cep = '66120000';
+            $cep = '66017970';
         } elseif ($zone_id == '454') { //PB
-            $cep = '58010000';
+            $cep = '58071973';
         } elseif ($zone_id == '455') { //PR
-            $cep = '80420200';
+            $cep = '80001970';
         } elseif ($zone_id == '456') { //PE
-            $cep = '50030000';
+            $cep = '50010970';
         } elseif ($zone_id == '457') { //PI
-            $cep = '64001040';
+            $cep = '64001970';
         } elseif ($zone_id == '458') { //RJ
-            $cep = '20021020';
+            $cep = '20010974';
         } elseif ($zone_id == '459') { //RN
-            $cep = '59025000';
+            $cep = '59010970';
         } elseif ($zone_id == '460') { //RS
-            $cep = '90450000';
+            $cep = '90010001';
         } elseif ($zone_id == '461') { //RO
-            $cep = '76803620';
+            $cep = '76801974';
         } elseif ($zone_id == '462') { //RR
-            $cep = '69314196';
+            $cep = '69301970';
         } elseif ($zone_id == '463') { //SC
-            $cep = '88010500';
+            $cep = '88010970';
         } elseif ($zone_id == '464') { //SP
-            $cep = '01007040';
+            $cep = '01031970';
         } elseif ($zone_id == '465') { //SE
-            $cep = '49010350';
+            $cep = '49001970';
         } elseif ($zone_id == '466') { //TO
-            $cep = '77062160';
+            $cep = '77001970';
         } else {
             $cep = false;
         }
