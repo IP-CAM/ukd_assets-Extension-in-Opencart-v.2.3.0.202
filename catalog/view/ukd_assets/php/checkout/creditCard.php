@@ -92,6 +92,17 @@ ccdata['cvvSize'] = 3;
 
 var selected_installment = '';
 
+var frm_pay = '#form-payment';
+
+//customer_payment_address
+if( $(frm_pay + ' input[name=payment_address][type=radio]') ){
+  var payment_address_data = $(frm_pay + ' select[name=address_id]').find('option:selected').data('address');
+  if(payment_address_data){
+    window.customer_payment_address = payment_address_data;
+    //console.log(payment_address_data);
+  }
+}
+
 function validate() {
 
     $('#cc_form .form-group').removeClass('has-error');
@@ -424,7 +435,7 @@ function createCardToken(data) {
 function createCardTokenCallback(token) {
 
 
-    console.log('customer_payment_address', window.customer_payment_address);
+    //console.log('customer_payment_address', window.customer_payment_address);
 
     window.token = token;
 
@@ -446,7 +457,11 @@ function createCardTokenCallback(token) {
     $('#form_pagseguro input[name=creditCardHolderPhone]').val($('#form_pagseguro input[name=senderPhone]').val());
 
 
+
+
     if( window.customer_payment_address){
+
+      console.log(window.customer_payment_address);
 
       var billingAddressStreet = window.customer_payment_address['address_1'];
       var billingAddressNumber = window.customer_payment_address['address_2'];
@@ -458,15 +473,20 @@ function createCardTokenCallback(token) {
 
     }else{
 
-      var billingAddressStreet = $('#collapse-payment-address input[name=address_1]').val();
-      var billingAddressNumber = $('#collapse-payment-address input[name=address_2]').val();
-      var billingAddressComplement = $('#collapse-payment-address input[name=address_1]').val();
-      var billingAddressDistrict = $('#collapse-payment-address input[name=address_2]').val();
-      var billingAddressPostalCode = $('#collapse-payment-address input[name=postcode]').val();
-      var billingAddressCity = $('#collapse-payment-address input[name=city]').val();
-      var billingAddressState = $('#collapse-payment-address select[name=zone_id]').find('option:selected').data('sigla');
+      var billingAddressStreet = $(frm_pay + ' input[name=address_1]').val();
+      var billingAddressNumber = $(frm_pay + ' input[name=address_2]').val();
+      var billingAddressComplement = $(frm_pay + ' input[name=address_1]').val();
+      var billingAddressDistrict = $(frm_pay + ' input[name=address_2]').val();
+      var billingAddressPostalCode = $(frm_pay + ' input[name=postcode]').val();
+      var billingAddressCity = $(frm_pay + ' input[name=city]').val();
+      var billingAddressState = $(frm_pay + ' select[name=zone_id]').find('option:selected').data('sigla');
 
     }
+
+    //Default values for optional fields
+    if(!billingAddressNumber) billingAddressNumber = 's/n';
+    if(!billingAddressComplement) billingAddressComplement = 'n/a';
+    if(!billingAddressDistrict) billingAddressDistrict = 'n/a';
 
     $('#form_pagseguro input[name=billingAddressStreet]').val(billingAddressStreet);
     $('#form_pagseguro input[name=billingAddressNumber]').val(billingAddressNumber);
@@ -482,7 +502,8 @@ function createCardTokenCallback(token) {
 
 function onFinishPayment(res){
 
-  //alert(res)
+  console.log('Finished');
+  window.location = locationURL;
 
 }
 

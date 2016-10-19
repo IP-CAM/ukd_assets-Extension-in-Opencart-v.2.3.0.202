@@ -1,176 +1,3 @@
-<div id="div_content" class="col-sm-12" hidden></div>
-
-<div class="modal fade" id="processModal" role="dialog">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title"></h4>
-      </div>
-      <div class="modal-body"></div>
-      <div class="modal-footer" hidden="hidden">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="buttons">
-  <center>
-    <input type="button" value="<?php echo $button_confirm; ?>" id="button-confirm" class="btn btn-success btn-lg" data-loading-text="<?php echo $text_loading; ?>" />
-  </center>
-  <!-- <input data-toggle="modal" data-target="#processModal" type="button" value="<?php echo $button_confirm; ?>" id="button-confirm" class="btn btn-primary" data-loading-text="<?php echo $text_loading; ?>" /> -->
-</div>
-</div>
-
-<form id="form_pagseguro">
-
-<input name="email" type="hidden" value="<?php echo $email; ?>" />
-<input name="token" type="hidden" value="<?php echo $token; ?>" />
-<input name="paymentMode" type="hidden" value="default" />
-<input name="paymentMethod" type="hidden" value="" />
-<input name="receiverMail" type="hidden" value="<?php echo $email; ?>" />
-<input name="currency" type="hidden" value="BRL" />
-
-<input name="senderName" type="hidden" value="<?php echo $payment_address['firstname'].' '.$payment_address['lastname'] ?>" />
-<input name="senderCPF" type="hidden" value="" />
-<input name="senderAreaCode" type="hidden" value="" />
-<input name="senderPhone" type="hidden" value="" />
-<input name="senderEmail" type="hidden" value="" />
-<input name="senderHash" type="hidden" value="" />
-
-
-<!--only credit card-->
-<input name="creditCardToken" type="hidden" value="" />
-<input name="installmentQuantity" type="hidden" value="" />
-<input name="installmentValue" type="hidden" value="" />
-<!-- <input name="noInterestInstallmentQuantity" type="hidden" value="2" /> -->
-
-<input name="creditCardHolderName" type="hidden" value="" />
-<input name="creditCardHolderCPF" type="hidden" value="" />
-<input name="creditCardHolderBirthDate" type="hidden" value="" />
-<input name="creditCardHolderAreaCode" type="hidden" value="" />
-<input name="creditCardHolderPhone" type="hidden" value="" />
-
-<input name="billingAddressStreet" type="hidden" value="" />
-<input name="billingAddressNumber" type="hidden" value="" />
-<input name="billingAddressComplement" type="hidden" value="" />
-<input name="billingAddressDistrict" type="hidden" value="" />
-<input name="billingAddressPostalCode" type="hidden" value="" />
-<input name="billingAddressCity" type="hidden" value="" />
-<input name="billingAddressState" type="hidden" value="" />
-<input name="billingAddressCountry" type="hidden" value="BRA" />
-<!-- credit card-->
-
-<!--only debito online-->
-<input name="bankName" type="hidden" value="" />
-<!--debito online-->
-
-<?php
-$address_number = 's/n';
-
-if(!$shipping_address){
-
-   $shipping_address['address_1'] = 'n/a';
-   $shipping_address['address_2'] = 'n/a';
-   $address_number = 'n/a';
-   $shipping_address['postcode'] = '00000000';
-   $shipping_address['city'] = 'n/a';
-   $shipping_address['zone_code'] = 'BA';
-   $shipping_address['iso_code_3'] = 'BRA';
-
-} else {
-
-  $address = explode(',', $shipping_address['address_1']);
-
-  $shipping_address['address_1'] = $address[0];
-
-  if(isset( $address[1] ) ){
-
-    $address_number =  $address[1];
-
-  }
-
-
-  if(!$shipping_address['address_2']){
-
-    $shipping_address['address_2'] = 'não disponível';
-
-  }
-
-}
-
-//print_r($shipping_address);
-?>
-
-<input name="shippingAddressStreet" type="hidden" value="<?php echo $shipping_address['address_1'] ?>" />
-<input name="shippingAddressNumber" type="hidden" value="<?php echo $address_number ?>" />
-<input name="shippingAddressComplement" type="hidden" value="" />
-<input name="shippingAddressDistrict" type="hidden" value="<?php echo $shipping_address['address_2']  ?>" />
-<input name="shippingAddressPostalCode" type="hidden" value="<?php echo $shipping_address['postcode'] ?>" />
-<input name="shippingAddressCity" type="hidden" value="<?php echo $shipping_address['city'] ?>" />
-<input name="shippingAddressState" type="hidden" value="<?php echo $shipping_address['zone_code'] ?>" />
-<input name="shippingAddressCountry" type="hidden" value="<?php echo $shipping_address['iso_code_3'] ?>" />
-
-<?php
-
-if(!$shipping_method){
-
-  $shipping_method['cost'] = '00.00';
-  $shipping_method['title'] = 'n/a';
-
-}
-
-$shipping_cost = number_format(str_replace( ',', '.', $shipping_method['cost'] ), 2, '.', '');
-
-$shipping_type = strtolower( $shipping_method['title'] );
-if( $shipping_type == 'pac'){
-  $shipping_type = '1';
-}
-elseif ($shipping_type == 'sedex') {
-  $shipping_type = '2';
-}else{
-  $shipping_type = '3';
-}
-
- ?>
-
-<input name="shippingType" type="hidden" value="<?php echo $shipping_type ?>" />
-<input name="shippingCost" type="hidden" value="<?php echo $shipping_cost ?>" />
-
-<?php
-$i = 1;
-foreach ($products as $product) {
-  $price = number_format(str_replace( ',', '.', $product['price'] ), 2, '.', '');
-?>
-<!-- Item list -->
-<input name="itemId<?php echo $i ?>" type="hidden" value="<?php echo $product['product_id'] ?>" />
-<input name="itemDescription<?php echo $i ?>" type="hidden" value="<?php echo $product['name'] ?>" />
-<input name="itemAmount<?php echo $i ?>" type="hidden" value="<?php echo $price ?>" />
-<input name="itemQuantity<?php echo $i ?>" type="hidden" value="<?php echo $product['quantity'] ?>" />
-<?php
-$i++;
-}
-?>
-
-<!-- <input name="notificationURL" type="hidden" value="http://fredukita.comeze.com/index.php" /> -->
-<input name="redirectURL" type="hidden" value="http://fredukita.comeze.com/index.php" />
-<input name="reference" type="hidden" value="" />
-
-</form>
-
-<script type="text/javascript">
-
-//console.log('<?php echo $continue; ?>');
-
-var img_url = '<?php echo $img_url ?>';
-var transactions_url = '<?php echo $transactions ?>';
-var locationURL = '<?php echo $continue; ?>';
-var directpayment = '<?php echo $directpayment ?>';
-var amount = '<?php echo number_format( $total + $shipping_method['cost'], 2, '.', '' ) ?>';
-var pagseguro_method =  window.pagseguro_method;
-
-
 //Custom field - Complemento
 $('#form_pagseguro input[name="shippingAddressComplement"]').val(window.shippingAddressComplement);
 
@@ -210,7 +37,7 @@ $('#button-confirm').on('click', function() {
                 //$('#button-confirm').button('reset');
             },
             success: function() {
-                //location = locationURL;
+                //location = '<?php //echo $continue; ?>';
                 //process();
                 startPayment();
             },
@@ -223,13 +50,13 @@ $('#button-confirm').on('click', function() {
     }
 });
 
-var cpf = $('#collapse-payment-address input[placeholder=CPF]').val() ||  window.customer['cpf'] ;
-$('#form_pagseguro input[name=senderCPF]').val(cpf) ;
+var cpf = $('#collapse-payment-address input[placeholder=CPF]').val() || window.customer['cpf'];
+$('#form_pagseguro input[name=senderCPF]').val(cpf);
 
-var email = $('#collapse-payment-address input[name=email]').val() || window.customer['email'] ;
+var email = $('#collapse-payment-address input[name=email]').val() || window.customer['email'];
 $('#form_pagseguro input[name=senderEmail]').val(email);
 
-var payment_telephone = $('#collapse-payment-address input[name=telephone]').val() || window.customer['telephone'] ;
+var payment_telephone = $('#collapse-payment-address input[name=telephone]').val() || window.customer['telephone'];
 
 payment_telephone = payment_telephone.split(' ');
 
@@ -241,7 +68,6 @@ $('#form_pagseguro input[name=senderPhone]').val(telephone);
 
 $('#form_pagseguro input[name=paymentMethod]').val(pagseguro_method);
 
-//Show loading...
 $('#div_content').html('<p><center><i class="fa fa-circle-o-notch fa-spin fa-3x fa-fw" style="font-size:48px;color:grey"></i></center></p>').show();
 
 $.get('catalog/view/ukd_assets/php/checkout/' + pagseguro_method + '.php')
@@ -288,7 +114,7 @@ function getSessionId() {
 
         },
         error: function(res) {
-            console.log(res, 'Error on getSessionId function');
+            console.log(res);
             // if (error_count < 5) getSessionId();
             // error_count++;
         }
@@ -306,8 +132,7 @@ function getPaymentMethods(sessionId) {
                 getPaymentMethodsCallback(res);
             },
             error: function(res) {
-                console.log(res, 'Error on getPaymentMethods function');
-                alert('O gateway de pagamento está temporariamente indisponível.');
+                //console.log(res);
             },
             complete: function(res) {
 
@@ -354,7 +179,7 @@ function getPaymentMethodsCallback(res) {
 
     } else {
 
-        alert('Gateway de pagamento está temporariamente indisponível.');
+        alert('O gateway de pagamento está temporariamente indisponível.');
 
     }
 
@@ -364,11 +189,12 @@ function process() {
 
     var error = false;
 
-    if(!$("#form_pagseguro input[name=senderHash]").val()){
+    if (!$("#form_pagseguro input[name=senderHash]").val()) {
 
-      $("#form_pagseguro input[name=senderHash]").val(PagSeguroDirectPayment.getSenderHash());
+        $("#form_pagseguro input[name=senderHash]").val(PagSeguroDirectPayment.getSenderHash());
 
     }
+
 
     $.ajax({
         type: "POST",
@@ -379,13 +205,17 @@ function process() {
         success: function(res) {
 
             if (res) {
+
                 if (res['error']) {
-                    console.log(res, 'Error on process function');
+
+                    console.log(res, 'error');
+
                     error = true;
+
                     processError(res['error']);
 
                 } else {
-                    console.log(res, 'Error on process function');
+                    console.log('processed...', res);
                     onFinishPayment(res)
                 }
             } else {
@@ -492,16 +322,14 @@ function filterError(code) {
 
 }
 
-function errorAlert(content){
+function errorAlert(content) {
 
-  $('#processModal .modal-title').html('Atenção');
+    $('#processModal .modal-title').html('Atenção');
 
-  $('#processModal .modal-footer').show();
+    $('#processModal .modal-footer').show();
 
-  $('#processModal .modal-body').html('<span style="text-transform: uppercase">' + content + '</span>');
+    $('#processModal .modal-body').html('<span style="text-transform: uppercase">' + content + '</span>');
 
-  $('#processModal').modal('show');
+    $('#processModal').modal('show');
 
 }
-
-</script>

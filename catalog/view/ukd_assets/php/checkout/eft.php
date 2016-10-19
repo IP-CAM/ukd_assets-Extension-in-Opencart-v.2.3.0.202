@@ -103,8 +103,9 @@ function validate(){
 
 function onFinishPayment(res){
 
-  var win = window.open(res['paymentLink'], '_blank');
-  if(win)win.focus();
+  // var win = window.open(res['paymentLink'], '_blank');
+  // if(win)win.focus();
+    window.location = locationURL + '&eft=' + res['paymentLink'];
 
 }
 

@@ -1,3 +1,4 @@
+<form id="form-payment">
 <div class="row">
   <div class="col-sm-6">
     <fieldset id="account">
@@ -316,6 +317,7 @@
     <input type="button" value="<?php echo $button_continue; ?>" id="button-guest" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary" />
   </div>
 </div>
+</form>
 <script type="text/javascript"><!--
 
 // Sort the custom fields

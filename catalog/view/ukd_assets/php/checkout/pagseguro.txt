@@ -3,3 +3,4 @@
 {2016/10/04 01:22:44} [Error] Exception: CURL can't connect: Empty reply from server 
 {2016/10/04 06:46:48} [Error] Exception: CURL can't connect: Could not resolve host: ws.sandbox.pagseguro.uol.com.br 
 {2016/10/15 05:47:50} [Error] Exception: CURL can't connect: Failed to connect to ws.sandbox.pagseguro.uol.com.br port 443: Timed out 
+{2016/10/18 04:43:50} [Error] Exception: CURL can't connect: Failed to connect to ws.sandbox.pagseguro.uol.com.br port 443: Timed out 

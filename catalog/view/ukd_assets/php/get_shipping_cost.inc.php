@@ -1,5 +1,13 @@
 <?php
 
+
+if((int)$weight > 30){
+  $frete['error'] = 'Limite de peso exede o máximo permitido de 30Kg . O peso atual do pedido é de '.(string)$weight.'Kg.';
+  $frete['pac'] = 'não disponível';
+  $frete['sedex'] = 'não disponível';
+}
+else{
+
 $params = [];
 
 // Código e senha da empresa, se você tiver contrato com os correios, se não tiver deixe vazio.
@@ -10,7 +18,7 @@ $params['sDsSenha'] = $senha;
 $params['sCepOrigem'] = $cep;
 $params['sCepDestino'] = $cep_dest;
 
-// O peso do produto deverá ser enviado em quilogramas, leve em consideração que isso deverá incluir o peso da embalagem.
+// O peso do produto deverá ser enviado em quilogramas(Kg), leve em consideração que isso deverá incluir o peso da embalagem.
 $params['nVlPeso'] = $weight;
 
 // O formato tem apenas duas opções: 1 para caixa / pacote e 2 para rolo/prisma.
@@ -80,3 +88,5 @@ if (curl_error($curl) || $resp === false) {
 }
 
 curl_close($curl);
+
+}

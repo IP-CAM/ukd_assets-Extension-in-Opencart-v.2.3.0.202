@@ -15,32 +15,32 @@ $('.collapse').on('show.bs.collapse', function() {
     var id = $(this).parent('div').find('h4').data('id');
 
     for (i in c) {
-    //  if (id < i && c[i].html().indexOf('<') == 0) {
-        if (id < i ) {
+        //  if (id < i && c[i].html().indexOf('<') == 0) {
+        if (id < i) {
             c[i].parent('div').css('background', '#fff').css('color', '#aaa');
             c[i].find('a').css('pointer-events', 'none');
             c[i].find('i').remove();
+        } else {
+            c[i].parent('div').css('background', '#cef').css('color', '#000');
         }
     }
 
     $(this).parent().find('.panel-heading').css('background', '#cef').css('color', '#000');
 
-
     //SCROLL TO NEXT PANEL
-    if($(this).attr('id') != 'collapse-payment-address' && $('input[name="shipping_address"]:checked').val()){
+    if ($(this).attr('id') != 'collapse-payment-address' && $('input[name="shipping_address"]:checked').val()) {
 
-      if(c[id-2])$(window).scrollTo(c[id-2].parent(),  { duration: 200});
+        if (c[id - 2]) $(window).scrollTo(c[id - 2].parent(), {
+            duration: 200
+        });
 
-    }else{
+    } else {
 
-      if(c[id-1] && c[id+1])$(window).scrollTo(c[id-1].parent(),  { duration: 200});
+        if (c[id - 1]) $(window).scrollTo(c[id - 1].parent(), {
+            duration: 200
+        });
 
     }
-
-
-
-
-
 
 });
 
@@ -48,27 +48,31 @@ $('#collapse-checkout-confirm').on('hide.bs.collapse', function() {
 
     $('#collapse-checkout-confirm .panel-body').empty();
 
-
 });
 
 function addressForm(id) {
-    $('#form-' + id + ' input[value=existing]').on('click', function() {
+  console.log(id);
+    $('#form-' + id + ' input[value=existing]').on('change', function() {
 
-        $('#form-' + id + ' #' + id + '-existing').show();
-        $('#form-' + id + ' #' + id + '-new').hide();
-        window[id + '_address']['radio_address'] = 'existing';
+        $('div#' + id + '-existing').show();
+        $('div#' + id + '-new').hide();
+        //window[id + '_address']['radio_address'] = 'existing';
         //$(id + ' input[name=' + id + '_address]').val('existing');
-        console.log('existing_address');
+        //console.log('existing_address');
+
+      //  $(id + ' input[name=' + id + '_address]').prop('value', 'existing')
+
 
     })
 
-    $('#form-' + id + ' input[value=new]').on('click', function() {
+    $('#form-' + id + ' input[value=new]').on('change', function() {
 
-        $('#form-' + id + ' #' + id + '-existing').hide();
-        $('#form-' + id + ' #' + id + '-new').show();
-        window[id + '_address']['radio_address'] = 'new';
+        $('div#' + id + '-existing').hide();
+        $('div#' + id + '-new').show();
+        //$(id + ' input[name=' + id + '_address]').prop('value', 'new')
+        //window[id + '_address']['radio_address'] = 'new';
         //$(id + ' input[name=' + id + '_address]').val('new');
-        console.log('new');
+        //console.log('new');
 
     })
 
@@ -156,36 +160,39 @@ function addressForm(id) {
         pickTime: true
     });
 
-    //ukd
 
-    if (window[id + '_address']) {
-        //console.log(window[id+'_address']);
-        for (i in window[id + '_address']) {
-            if (i == 'radio_address') {
-                $('#form-' + id + ' input[value="' + window[id + '_address'][i] + '"]').click();
-            } else {
-                $('#form-' + id + '> *[name=\'' + i + '\']').val(window[id + '_address'][i]);
-            }
-        }
-    } else {
-        window[id + '_address'] = [];
-    }
 
-    var el = $('#form-' + id + ' input, #form-' + id + ' select');
-
-    el.blur(function(event) {
-
-        el.each(function() {
-
-            window[id + '_address'][$(this).attr('name')] = $(this).val();
-
-        });
-
-    });
-
-    $('#form-' + id + ' select[name=\'address_id\']').change(function(event) {
-        window[id + '_address'] = $(this).find('option:selected').data('address');
-    }).trigger('change');
+//
+// //ukd
+//
+// if (window[id + '_address']) {
+//     //console.log(window[id+'_address']);
+//     for (i in window[id + '_address']) {
+//         if (i == 'radio_address') {
+//             $('#form-' + id + ' input[value="' + window[id + '_address'][i] + '"]').click();
+//         } else {
+//             $('#form-' + id + '> *[name=\'' + i + '\']').val(window[id + '_address'][i]);
+//         }
+//     }
+// } else {
+//     window[id + '_address'] = [];
+// }
+//
+// var el = $('#form-' + id + ' input, #form-' + id + ' select');
+//
+// el.blur(function(event) {
+//
+//     el.each(function() {
+//
+//         window[id + '_address'][$(this).attr('name')] = $(this).val();
+//
+//     });
+//
+// });
+//
+// $('#form-' + id + ' select[name=\'address_id\']').change(function(event) {
+//     window[id + '_address'] = $(this).find('option:selected').data('address');
+// }).trigger('change');
 
 
 }

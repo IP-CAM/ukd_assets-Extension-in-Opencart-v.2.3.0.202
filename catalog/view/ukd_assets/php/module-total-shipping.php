@@ -15,23 +15,14 @@ header('Content-Type: text/json; charset=utf-8');
 
 $data = [];
 
-if(!isset($frete['error'])){
+if (!isset($frete['error'])) {
+    foreach ($frete as $key => $value) {
+        $quote = [['code' => 'ukd_correios.'.$key, 'title' => strtoupper($key), 'text' => 'R$'.$frete[$key]['valor']]];
 
-  foreach ($frete as $key => $value) {
-    # code...
+        array_push($data, ['title' => '', 'quote' => $quote]);
+    }
 
-    $quote = [['code'=>'ukd_correios.'.$key, 'title'=>strtoupper($key), 'text'=>'R$'.$frete[$key]['valor']]];
-
-    array_push($data, ['title'=>'', 'quote'=>$quote] );
-
-  }
-
-  echo json_encode(['shipping_method'=>$data]);
-
+    echo json_encode(['shipping_method' => $data]);
 } else {
-
-  echo json_encode(['error'=>['warning'=>$frete['error']]]);
-
+    echo json_encode(['error' => ['warning' => $frete['error']]]);
 }
-
-

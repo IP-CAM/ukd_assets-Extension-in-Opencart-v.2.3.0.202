@@ -168,7 +168,11 @@ class ControllerCheckoutCheckout extends Controller {
 			$this->load->model('account/custom_field');
 			$customer_info = $this->model_account_customer->getCustomer($this->customer->getId());
 			$this->custom_fields = $this->model_account_custom_field->getCustomFields($this->config->get('config_customer_group_display'));
-			$this->field_values = json_decode( $customer_info['custom_field'], true);
+			if(isset($customer_info['custom_field'])){
+				$this->field_values = json_decode( $customer_info['custom_field'], true);
+			}else{
+				return [];
+			}
 		}
 
 		$resp = '';

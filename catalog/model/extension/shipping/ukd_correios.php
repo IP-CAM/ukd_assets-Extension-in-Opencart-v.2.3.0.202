@@ -76,6 +76,7 @@ class ModelExtensionShippingUkdCorreios extends Model
 
         include 'catalog/view/ukd_assets/php/get_shipping_cost.inc.php';
 
+
         if (!isset($frete['pac']) && !isset($frete['sedex'])) {
             $status = false;
 
@@ -94,16 +95,16 @@ class ModelExtensionShippingUkdCorreios extends Model
             }
 
             return $resp;
-
-        } elseif (isset($frete['error'])) {
+        }
+        else if (isset($frete['error'])) {
             $status = false;
 
             return $method_data = [
                 'code' => 'ukd_correios',
-                'title' => 'Não é possível acessar o sistema do Correios.',
+                'title' => 'Correios',
                 'quote' => [],
                 'sort_order' => $this->config->get('ukd_correios_sort_order'),
-                'error' => true,
+                'error' => $frete['error'],
             ];
         }
 

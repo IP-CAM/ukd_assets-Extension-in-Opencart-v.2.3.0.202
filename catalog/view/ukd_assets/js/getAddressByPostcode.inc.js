@@ -3,7 +3,7 @@ function getAddressByPostcode(form, autosave = true) {
     address_autofill($(form + ' input[name=\'postcode\']'));
 
     if (autosave) {
-        $(form + ' input, ' + form + ' select').blur(function(event) {
+        $(form + ' input:not([type=radio]), ' + form + ' select').blur(function(event) {
             window[form][$(this).attr('name')] = $(this).val();
         });
 

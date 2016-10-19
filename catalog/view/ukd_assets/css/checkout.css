@@ -31,7 +31,7 @@
 
 .funkyradio label {
     width: 100%;
-    border-radius: 3px;
+    /*border-radius: 3px;*/
     border: 1px solid #D1D3D4;
     font-weight: normal;
     text-transform: uppercase;
@@ -62,7 +62,7 @@
     content: '';
     width: 2.5em;
     background: #D1D3D4;
-    border-radius: 3px 0 0 3px;
+    /*border-radius: 3px 0 0 3px;*/
 }
 
 .funkyradio input[type="radio"]:hover:not(:checked)~label, .funkyradio input[type="checkbox"]:hover:not(:checked)~label {
