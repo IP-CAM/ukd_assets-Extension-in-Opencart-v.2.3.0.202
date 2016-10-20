@@ -55,7 +55,7 @@ ob_end_flush();
       <div id="top-links" class="nav pull-right">
         <ul class="list-inline">
 
-          <li class="dropdown"><a href="<?php echo $account; ?>" title="<?php echo $text_account; ?>" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <span class="hidden-xs"><?php echo $text_account; ?></span> <span class="caret"></span></a>
+          <li class="dropdown"><a href="<?php echo $account; ?>" title="<?php echo $text_account; ?>" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-diamond"></i> <span class="hidden-xs"><?php echo $text_account; ?></span> <span class="caret"></span></a>
             <ul class="dropdown-menu dropdown-menu-right">
               <?php if ($logged) { ?>
               <li>
@@ -105,7 +105,7 @@ ob_end_flush();
       <!-- </div> -->
     </nav>
 
-    <div id="logo-place">
+    <header>
       <div class="container">
         <div class="col-md-3">
           <div id="logo">
@@ -116,18 +116,26 @@ ob_end_flush();
             <?php } ?>
           </div>
         </div>
-        <div class="col-md-9 nopadding">
-          <div class="col-sm-8 ">
+        <div class="col-md-9 ">
+          <div class="col-sm-7 ">
             <?php echo $search; ?>
           </div>
-          <div class="col-sm-4 ">
+          <div class="col-sm-4  ">
             <center>
               <?php echo $cart; ?>
             </center>
           </div>
+          <div class="col-sm-1 ">
+          <?php if ($logged) { ?>
+          <a href="<?php echo $logout; ?>"><i class="fa fa-sign-in" style="color:#FFB2DB; font-size:44px" aria-hidden="true"></i></a>
+          <?php } else { ?>
+          <a href="<?php echo $login; ?>"><i class="fa fa-sign-out" style="color:#FFB2DB; font-size:44px" aria-hidden="true"></i></a>
+          <?php } ?>
+
+          </div>
         </div>
       </div>
-    </div>
+    </header>
 
     <?php if ($categories) { ?>
     <div style="background-color:#592B56">
@@ -176,16 +184,34 @@ ob_end_flush();
       </nav>
     </div>
     <?php } ?>
-    <header id="header">
-      <div class="container">
-        <div class="row">
-          <div class="col-sm-4">
-          </div>
-          <div class="col-sm-5">
-          </div>
-          <div class="col-sm-3">
+    <div id="home-info" class="container hide">
 
-          </div>
-        </div>
+      <div class="col-md-3 col-sm-4 col-xs-4 hidden-xs2 nopadding">
+        <i class="col-sm-4 fa fa-truck hidden-xs2" aria-hidden="true"></i>
+        <div class="col-sm-8 nopadding"><strong>Frete grátis</strong><br /><span><a href="#">Veja as condições aqui</a></span></div>
       </div>
-    </header>
+
+      <div class="col-md-3 hidden-sm hidden-xs hidden-xs2 nopadding">
+        <i class="col-sm-4 fa fa-facebook-official hidden-xs2" aria-hidden="true"></i>
+        <div class="col-sm-8 nopadding"><strong>Facebook</strong><br /><span><a href="#">Curta nossa página</a></span></div>
+      </div>
+
+      <div class="col-md-3 col-sm-4 col-xs-4  col-xs2-6 hidden-xs3 nopadding">
+        <i class="col-sm-4 fa fa-whatsapp hidden-xs2" aria-hidden="true"></i>
+        <div class="col-sm-8 nopadding"><strong>Whatsapp</strong><br /><span><a href="tel:+5571987186507">(71) 98719 6507</a></span></div>
+      </div>
+
+
+      <?php if (!$logged) { ?>
+      <div class="col-md-3 col-sm-4 col-xs-4  col-xs2-6 col-xs3-12 nopadding">
+        <i class="col-sm-4 fa fa-sign-in hidden-xs2" aria-hidden="true"></i>
+        <div class="col-sm-8 nopadding"><strong>Casdastre-se já!</strong><br /><span><a href="<?php echo $login; ?>">Acesse sua conta</a></span></div>
+      </div>
+      <?php }else{ ?>
+      <div class="col-md-3 col-sm-4 col-xs-4  col-xs2-6 col-xs3-12 nopadding">
+         <!-- <i class="col-sm-4 fa fa-diamond hidden-xs2 " aria-hidden="true"></i>  -->
+        <div class="col-sm-8 nopadding pull-right" style="text-align:right" ><strong>Minha conta</strong><br /><span>Frederico | <a href="<?php echo $logout; ?>">Sair</a></span></div>
+      </div>
+      <?php } ?>
+
+    </div>

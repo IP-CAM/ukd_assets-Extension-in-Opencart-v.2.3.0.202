@@ -155,6 +155,49 @@ div.required .control-label:before {
 }
 
 
+#home-info{
+
+  margin-bottom: 20px;
+
+}
+
+#home-info i{
+  font-size: 400%;
+  color: #EF218F;
+  text-align: right;
+}
+
+#home-info strong{
+  font-size: 20px;
+  color: #EF218F;
+}
+
+#home-info span{
+  font-size: 14px;
+  color: #EF218F;
+}
+
+
+@media (max-width: 640) {
+    .hidden-xs2{
+      display: none;
+    }
+    .col-xs2-6{
+      width: 50%;
+    }
+}
+
+@media (max-width: 350px) {
+    .hidden-xs3{
+      display: none;
+    }
+    .col-xs3-12{
+      width: 100%;
+    }
+}
+
+
+
 /*#top .container {
     padding: 0 20px;
 }*/
@@ -206,11 +249,6 @@ div.required .control-label:before {
     margin-left: 30px;
 }
 
-#header {
-    /*padding: 40px;*/
-}
-
-
 /* logo */
 
 @media(max-width:992px) {
@@ -219,7 +257,7 @@ div.required .control-label:before {
     }
 }
 
-#logo-place {
+header {
     /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#592b56+0,492447+100 */
     background: rgb(89, 43, 86);
     /* Old browsers */
