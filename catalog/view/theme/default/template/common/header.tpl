@@ -127,9 +127,9 @@ ob_end_flush();
           </div>
           <div class="col-sm-1 ">
           <?php if ($logged) { ?>
-          <a href="<?php echo $logout; ?>"><i class="fa fa-sign-in" style="color:#FFB2DB; font-size:44px" aria-hidden="true"></i></a>
+          <a href="<?php echo $logout; ?>"><i class="fa fa-sign-out" style="color:#FFB2DB; font-size:44px" aria-hidden="true"></i></a>
           <?php } else { ?>
-          <a href="<?php echo $login; ?>"><i class="fa fa-sign-out" style="color:#FFB2DB; font-size:44px" aria-hidden="true"></i></a>
+          <a href="<?php echo $login; ?>"><i class="fa fa-sign-in" style="color:#FFB2DB; font-size:44px" aria-hidden="true"></i></a>
           <?php } ?>
 
           </div>
@@ -210,7 +210,7 @@ ob_end_flush();
       <?php }else{ ?>
       <div class="col-md-3 col-sm-4 col-xs-4  col-xs2-6 col-xs3-12 nopadding">
          <!-- <i class="col-sm-4 fa fa-diamond hidden-xs2 " aria-hidden="true"></i>  -->
-        <div class="col-sm-8 nopadding pull-right" style="text-align:right" ><strong>Minha conta</strong><br /><span>Frederico | <a href="<?php echo $logout; ?>">Sair</a></span></div>
+        <div id="login-info" class="col-sm-8 nopadding pull-right"><span>Olá, <?php echo $username ?><br /><a href="<?php echo $account; ?>"><?php echo $text_account ?></a> | <a href="<?php echo $logout; ?>">Sair</a></span></div>
       </div>
       <?php } ?>
 

@@ -50,4 +50,10 @@
       <?php echo $content_bottom; ?></div>
     <?php echo $column_right; ?></div>
 </div>
-<?php echo $footer; ?> 
+<script>
+window.ukd_fn = window.ukd_fn || [];
+window.ukd_fn.push(function() {
+  $('#home-info').removeClass('hide');
+})
+</script>
+<?php echo $footer; ?>

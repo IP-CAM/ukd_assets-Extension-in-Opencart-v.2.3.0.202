@@ -139,6 +139,12 @@ div.required .control-label:before {
     line-height: 40px;
 }
 
+.label-as-badge{
+  border-radius: 10px;
+  background-color: #EF218F;
+  text-align: center;
+}
+
 #cart_count_products {
     position: relative;
     right: 10px;
@@ -177,8 +183,21 @@ div.required .control-label:before {
   color: #EF218F;
 }
 
+#login-info{
+  text-align: right;
+}
 
-@media (max-width: 640) {
+
+#login-info strong, #login-info span{
+  color: #555;
+}
+
+#login-info strong{
+  font-size: 16px;
+}
+
+
+@media (max-width: 640px) {
     .hidden-xs2{
       display: none;
     }
