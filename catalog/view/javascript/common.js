@@ -55,7 +55,7 @@ $(document).ready(function() {
 
     /* Search */
     $('#search input[name=\'search\']').parent().find('button').on('click', function() {
-        var url = $('base').attr('href') + 'index.php?route=product/search';
+        var url = $('base').attr('href') + 'busca';
 
         var value = $('header #search input[name=\'search\']').val();
 
@@ -205,8 +205,12 @@ var cart = {
                     $('#cart_total').html(json['cart_total']);
                 }, 100);
 
+                var getURlRewrite = $(location).attr('href').split('/').pop();
+
                 if (getURLVar('route') == 'checkout/cart' || getURLVar('route') == 'checkout/checkout') {
                     location = 'index.php?route=checkout/cart';
+                } else if (getURlRewrite == 'carrinho' || getURlRewrite == 'finalizar') {
+                    location = 'carrinho';
                 } else {
                     $('#cart > ul').load('index.php?route=common/cart/info ul li');
                 }
@@ -236,8 +240,12 @@ var cart = {
                     $('#cart_total').html(json['cart_total']);
                 }, 100);
 
+                var getURlRewrite = $(location).attr('href').split('/').pop();
+
                 if (getURLVar('route') == 'checkout/cart' || getURLVar('route') == 'checkout/checkout') {
                     location = 'index.php?route=checkout/cart';
+                } else if (getURlRewrite == 'carrinho' || getURlRewrite == 'finalizar') {
+                    location = 'carrinho';
                 } else {
                     $('#cart > ul').load('index.php?route=common/cart/info ul li');
                 }
@@ -273,8 +281,12 @@ var voucher = {
                     $('#cart_total').html(json['cart_total']);
                 }, 100);
 
+                var getURlRewrite = $(location).attr('href').split('/').pop();
+
                 if (getURLVar('route') == 'checkout/cart' || getURLVar('route') == 'checkout/checkout') {
                     location = 'index.php?route=checkout/cart';
+                } else if (getURlRewrite == 'carrinho' || getURlRewrite == 'finalizar') {
+                    location = 'carrinho';
                 } else {
                     $('#cart > ul').load('index.php?route=common/cart/info ul li');
                 }

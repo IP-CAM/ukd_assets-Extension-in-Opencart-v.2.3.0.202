@@ -2,3 +2,6 @@ commit 1
 -header.tpl username 
 -stylesheet.css #login-info
 -changes.txt added
+commit 2
+-Todas URLs amigáveis mod
+-common.js
