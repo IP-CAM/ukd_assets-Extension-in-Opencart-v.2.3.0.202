@@ -84,6 +84,12 @@
             <div class="panel-body"></div>
           </div>
         </div>
+
+
+          <div style="text-align:right; margin-top:30px; clear:both">
+            Pagamento processado pelo   <img src="catalog/view/ukd_assets/images/logo_pagseguro200x41.png" alt="PagSeguro" title="Compre com pagSeguro e fique sossegado" />
+          </div>
+
       </div>
       <?php echo $content_bottom; ?></div>
     <?php echo $column_right; ?></div>

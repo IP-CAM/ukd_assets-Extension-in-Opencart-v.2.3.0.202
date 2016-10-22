@@ -38,18 +38,16 @@ require_once '../security.php';
 </style>
 <div class="panel panel-default">
   <div class="panel-heading">DÉBITO ONLINE</div>
-    <div class="panel-body" style="margin-bottom:15px">
-      <div>
-        Selecione seu Banco para pagamento.
-      </div>
-      <div id="eft_options"></div>
+  <div class="panel-body" style="margin-bottom:15px">
+    <div>
+    Selecione seu Banco para pagamento.
     </div>
+    <div id="eft_options"><p><center><i class="fa fa-circle-o-notch fa-spin fa-3x fa-fw" style="font-size:48px;color:#ccc"></i></center></p></div>
   </div>
 </div>
-<br />
+
 <script>
 
-$('#eft_options').html('<p><center><i class="fa fa-circle-o-notch fa-spin fa-3x fa-fw" style="font-size:48px;color:#ccc"></i></center></p>');
 
 function init_eft(){
     var data = window.options;

@@ -1,11 +1,14 @@
 <?php
 require_once '../security.php';
 ?>
-<div class="col-xs-12 col-sm-6 col-md-5 " style="padding:0; margin:0">
-<div class="panel panel-default" >
-  <div class="panel-heading display-table" style="background-color:#cef">
+<div class="container nopadding">
+
+
+<div class="col-xs-12 col-sm-6 col-md-6 nopadding">
+<div class="panel panel-success" >
+  <div class="panel-heading display-table">
     <div class="row display-tr">
-        <span style="font-size:12px; margin-left:20px">CARTÃO DE CRÉDITO</span>
+        <span style="font-size:12px; margin-left:20px">DADOS DO CARTÃO DE CRÉDITO</span>
     </div>
   </div>
   <div style="padding:10px">
@@ -50,7 +53,7 @@ require_once '../security.php';
       <div class="row">
         <div class="col-sm-6">
           <div class="form-group">
-            <label for="cardExpiry"><span class="hidden-xs">DATA DE EXPIRAÇÃO</span><span class="visible-xs-inline">DATA DE EXP.</span></label>
+            <label for="cardExpiry"><span class="hidden-xs">DATA DE EXPIRAÇÂO</span><span class="visible-xs-inline">DATA DE EXP.</span></label>
             <input type="tel" class="form-control date2" name="cardExpiry" placeholder="Mês / Ano" />
           </div>
         </div>
@@ -75,10 +78,17 @@ require_once '../security.php';
     </form>
   </div>
 </div>
+
 </div>
-<div class="col-sm-6 col-md-7">
-  DIV
+<div class="hidden-xs col-sm-6 col-md-6">
+
+
+<img src="https://stc.pagseguro.uol.com.br/public/img/banners/seguranca/seguranca_125x125.gif" alt="Banner PagSeguro" title="Compre com pagSeguro e fique sossegado">
+<img src="https://stc.pagseguro.uol.com.br/public/img/banners/divulgacao/125x125_10X_pagseguro.gif" alt="Banner PagSeguro" title="Parcele suas compras em até 18x">
 </div>
+</div>
+
+
 
 <script>
 

@@ -2,6 +2,7 @@
 <p>
   <?php echo $text_payment_method; ?>
 </p>
+
 <div class="container col-sm-12 ">
   <div class="row">
     <div class="col-sm-4 funkyradio-primary funkyradio" title="Boleto Bancário">
@@ -17,6 +18,10 @@
       <label for="tt">Débito Online</label>
     </div>
   </div>
+
+  <center class="visible-sm visible-md visible-lg" style="margin-top:40px">
+    <img src="https://stc.pagseguro.uol.com.br/public/img/banners/pagamento/todos_animado_550_50.gif" alt="Logotipos de meios de pagamento do PagSeguro" title="Este site aceita pagamentos com Visa, MasterCard, Diners, American Express, Hipercard, Aura, Elo, PLENOCard, PersonalCard, BrasilCard, FORTBRASIL, Cabal, Mais!, Avista, Grandcard, Sorocred, Bradesco, Itaú, Banco do Brasil, Banrisul, Banco HSBC, saldo em conta PagSeguro e boleto.">
+  </center>
   <div class="row">
     <hr />
     <input class="hidden" name="payment_method" value="ukd_pagseguro" checked="checked" type="radio" hidden />
@@ -29,7 +34,7 @@
     </div>
   </div>
 </div>
-
+<hr />
 <script>
 if(!window.pagseguro_method){
   window.pagseguro_method = $('#collapse-payment-method input[name=pagseguro_method]:checked').val();

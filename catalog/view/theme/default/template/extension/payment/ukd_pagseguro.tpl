@@ -1,26 +1,28 @@
-<div id="div_content" class="col-sm-12" hidden></div>
+<div id="div_content" hidden></div>
 
-<div class="modal fade" id="processModal" role="dialog">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title"></h4>
-      </div>
-      <div class="modal-body"></div>
-      <div class="modal-footer" hidden="hidden">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+  <div class="modal fade" id="processModal" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title"></h4>
+        </div>
+        <div class="modal-body"></div>
+        <div class="modal-footer" hidden="hidden">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+        </div>
       </div>
     </div>
   </div>
-</div>
 
-<div class="buttons">
-  <center>
-    <input type="button" value="<?php echo $button_confirm; ?>" id="button-confirm" class="btn btn-success btn-lg" data-loading-text="<?php echo $text_loading; ?>" />
-  </center>
-  <!-- <input data-toggle="modal" data-target="#processModal" type="button" value="<?php echo $button_confirm; ?>" id="button-confirm" class="btn btn-primary" data-loading-text="<?php echo $text_loading; ?>" /> -->
-</div>
+  <hr />
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <center>
+      <input type="button" value="<?php echo $button_confirm; ?>" id="button-confirm" class="btn btn-success btn-lg" data-loading-text="<?php echo $text_loading; ?>" />
+    </center>
+  </div>
+
 </div>
 
 <form id="form_pagseguro">

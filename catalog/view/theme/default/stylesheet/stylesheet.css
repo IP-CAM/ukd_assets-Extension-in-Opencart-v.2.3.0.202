@@ -104,10 +104,13 @@ div.required .control-label:before {
 	background-repeat: repeat-x;*/
 }
 
+
+
 .panel-default>.panel-heading {
     color: #333333;
     background-color: #cef;
     padding: 15px;
+    border: 0;
 }
 
 .nopadding {
@@ -292,7 +295,10 @@ header {
     padding-bottom: 30px;
 }
 
-#logo-place .container {}
+hr {
+    border-top: none;
+    /*border-bottom: 1px solid #FFB2DB;*/
+}
 
 
 /* search */
