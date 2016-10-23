@@ -810,3 +810,49 @@ MOD: Ukd Correios
 ----------------------------------------------------------------
 MOD: Ukd Pagseguro
 ----------------------------------------------------------------
+2016-10-23 1:18:10 - MOD: Modification Default
+
+FILE: system/engine/action.php
+REGEX: ~(require|include)(_once)?\(([^)]+)~
+LINE: 41
+
+FILE: system/engine/loader.php
+REGEX: ~(require|include)(_once)?\(([^)]+)~
+LINE: 49
+LINE: 108
+LINE: 120
+LINE: 165
+
+FILE: system/library/config.php
+REGEX: ~(require|include)(_once)?\(([^)]+)~
+LINE: 23
+
+FILE: system/library/language.php
+REGEX: ~(require|include)(_once)?\(([^)]+)~
+LINE: 38
+LINE: 40
+LINE: 49
+LINE: 51
+LINE: 60
+LINE: 62
+
+FILE: system/library/template/php.php
+REGEX: ~(require|include)(_once)?\(([^)]+)~
+LINE: 18
+
+FILE: system/library/template/tiwg.php
+REGEX: ~(require|include)(_once)?\(([^)]+)~
+LINE: 24
+----------------------------------------------------------------
+MOD: Instalador sem FTP
+
+FILE: admin/controller/extension/installer.php
+CODE: public function ftp() {
+LINE: 251
+CODE: public function sql() {
+LINE: 509
+----------------------------------------------------------------
+MOD: Ukd Correios
+----------------------------------------------------------------
+MOD: Ukd Pagseguro
+----------------------------------------------------------------

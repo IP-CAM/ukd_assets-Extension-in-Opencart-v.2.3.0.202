@@ -1,0 +1,29 @@
+2016-10-23 0:53:47 - PHP Notice:  ob_flush(): failed to flush buffer. No buffer to flush in /home/balas138/public_html/catalog/view/theme/default/template/common/header.tpl on line 46
+2016-10-23 0:53:54 - PHP Notice:  ob_flush(): failed to flush buffer. No buffer to flush in /home/balas138/public_html/catalog/view/theme/default/template/common/header.tpl on line 46
+2016-10-23 0:55:13 - PHP Notice:  ob_flush(): failed to flush buffer. No buffer to flush in /home/balas138/public_html/catalog/view/theme/default/template/common/header.tpl on line 46
+2016-10-23 0:55:56 - PHP Notice:  ob_flush(): failed to flush buffer. No buffer to flush in /home/balas138/public_html/catalog/view/theme/default/template/common/header.tpl on line 46
+2016-10-23 0:57:10 - PHP Notice:  ob_flush(): failed to flush buffer. No buffer to flush in /home/balas138/public_html/catalog/view/theme/default/template/common/header.tpl on line 46
+2016-10-23 0:57:14 - PHP Notice:  ob_flush(): failed to flush buffer. No buffer to flush in /home/balas138/public_html/catalog/view/theme/default/template/common/header.tpl on line 46
+2016-10-23 0:58:23 - PHP Notice:  ob_flush(): failed to flush buffer. No buffer to flush in /home/balas138/public_html/catalog/view/theme/default/template/common/header.tpl on line 46
+2016-10-23 1:00:03 - PHP Notice:  ob_flush(): failed to flush buffer. No buffer to flush in /home/balas138/public_html/catalog/view/theme/default/template/common/header.tpl on line 46
+2016-10-23 1:01:28 - PHP Notice:  ob_flush(): failed to flush buffer. No buffer to flush in /home/balas138/public_html/catalog/view/theme/default/template/common/header.tpl on line 46
+2016-10-23 1:03:51 - PHP Notice:  ob_flush(): failed to flush buffer. No buffer to flush in /home/balas138/public_html/catalog/view/theme/default/template/common/header.tpl on line 46
+2016-10-23 1:03:54 - PHP Notice:  ob_flush(): failed to flush buffer. No buffer to flush in /home/balas138/public_html/catalog/view/theme/default/template/common/header.tpl on line 46
+2016-10-23 1:04:27 - PHP Notice:  ob_flush(): failed to flush buffer. No buffer to flush in /home/balas138/public_html/catalog/view/theme/default/template/common/header.tpl on line 46
+2016-10-23 1:04:37 - PHP Notice:  ob_flush(): failed to flush buffer. No buffer to flush in /home/balas138/public_html/catalog/view/theme/default/template/common/header.tpl on line 46
+2016-10-23 1:04:43 - PHP Notice:  ob_flush(): failed to flush buffer. No buffer to flush in /home/balas138/public_html/catalog/view/theme/default/template/common/header.tpl on line 46
+2016-10-23 1:07:35 - PHP Notice:  ob_flush(): failed to flush buffer. No buffer to flush in /home/balas138/public_html/catalog/view/theme/default/template/common/header.tpl on line 46
+2016-10-23 1:07:48 - PHP Notice:  ob_flush(): failed to flush buffer. No buffer to flush in /home/balas138/public_html/catalog/view/theme/default/template/common/header.tpl on line 46
+2016-10-23 1:13:08 - PHP Notice:  ob_flush(): failed to flush buffer. No buffer to flush in /home/balas138/public_html/catalog/view/theme/default/template/common/header.tpl on line 47
+2016-10-23 1:13:33 - PHP Notice:  ob_flush(): failed to flush buffer. No buffer to flush in /home/balas138/public_html/catalog/view/theme/default/template/common/header.tpl on line 46
+2016-10-23 1:15:24 - PHP Notice:  ob_flush(): failed to flush buffer. No buffer to flush in /home/balas138/public_html/catalog/view/theme/default/template/common/header.tpl on line 46
+2016-10-23 1:15:33 - PHP Notice:  ob_flush(): failed to flush buffer. No buffer to flush in /home/balas138/public_html/catalog/view/theme/default/template/common/header.tpl on line 46
+2016-10-23 1:18:30 - PHP Notice:  Undefined variable: help_email in /home/balas138/public_html/admin/view/template/extension/payment/ukd_pagseguro_tabs/production.tpl on line 16
+2016-10-23 1:18:30 - PHP Notice:  Undefined variable: help_token in /home/balas138/public_html/admin/view/template/extension/payment/ukd_pagseguro_tabs/production.tpl on line 32
+2016-10-23 1:18:30 - PHP Notice:  Undefined variable: help_email in /home/balas138/public_html/admin/view/template/extension/payment/ukd_pagseguro_tabs/sandbox.tpl on line 16
+2016-10-23 1:18:30 - PHP Notice:  Undefined variable: help_token in /home/balas138/public_html/admin/view/template/extension/payment/ukd_pagseguro_tabs/sandbox.tpl on line 32
+2016-10-23 1:18:47 - PHP Notice:  Undefined variable: ukd_correios_sandbox_enabled in /home/balas138/public_html/admin/view/template/extension/shipping/ukd_correios_tabs/config.tpl on line 92
+2016-10-23 1:18:47 - PHP Notice:  Undefined variable: order_statuses in /home/balas138/public_html/admin/view/template/extension/shipping/ukd_correios_tabs/config.tpl on line 119
+2016-10-23 1:18:47 - PHP Warning:  Invalid argument supplied for foreach() in /home/balas138/public_html/admin/view/template/extension/shipping/ukd_correios_tabs/config.tpl on line 119
+2016-10-23 1:18:47 - PHP Notice:  Undefined variable: ukd_correios_min_amount in /home/balas138/public_html/admin/view/template/extension/shipping/ukd_correios_tabs/config.tpl on line 147
+2016-10-23 1:18:47 - PHP Notice:  Undefined variable: error_min_amount in /home/balas138/public_html/admin/view/template/extension/shipping/ukd_correios_tabs/config.tpl on line 148

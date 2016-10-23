@@ -1,14 +1,14 @@
 <!--
-********************************************************************************
-   UKD - UKITA DEVELOPMENT
---------------------------------------------------------------------------------
-   Extension : Ukd Pagseguro
-   Ext. Code : ukd_pagseguro_209004f2 
-   Filename  : ukd_pagseguro\upload\admin\view\template\extension\payment\ukd_pagseguro_tabs\sandbox.tpl
-   Author    : Fred Ukita
-   Date      : Tuesday 13th of September 2016 07:52:06 PM 
-********************************************************************************
--->
+********************************************************************************
+   UKD - UKITA DEVELOPMENT
+--------------------------------------------------------------------------------
+   Extension : Ukd Pagseguro
+   Ext. Code : ukd_pagseguro_209004f2 
+   Filename  : ukd_pagseguro\upload\admin\view\template\extension\payment\ukd_pagseguro_tabs\sandbox.tpl
+   Author    : Fred Ukita
+   Date      : Tuesday 13th of September 2016 07:52:06 PM 
+********************************************************************************
+-->
 <div class="container-fluid">
 
   <!-- Email -->

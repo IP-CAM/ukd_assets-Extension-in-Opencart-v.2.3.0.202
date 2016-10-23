@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>BALASH</title>
+  <meta charset="UTF-8">
+  <meta name="description" content="Eyelash Artists Shop">
+  <meta name="keywords" content="Eyelash,Extension">
+  <meta name="author" content="Frederico Ukita">
+  <link rel="shortcut icon" type="image/png" href="/favicon-16x16.png"/>
+  <link rel="shortcut icon" type="image/png" href="http://www.balash.com.br/favicon-16x16.png"/>
+  <style>
+    body,
+    html {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: #592B56;
+    }
+
+    img {
+      max-width: 100% !important;
+      max-height: 100% !important;
+      display: block;
+    }
+
+    @media only screen and (max-width: 320px) {
+      img {
+        display: none;
+      }
+      img.smallscreen {
+        display: inline;
+      }
+    }
+
+    .flex-container {
+      display: -ms-flexbox;
+      display: -webkit-flex;
+      display: flex;
+      -webkit-flex-direction: row;
+      -ms-flex-direction: row;
+      flex-direction: row;
+      -webkit-flex-wrap: nowrap;
+      -ms-flex-wrap: nowrap;
+      flex-wrap: nowrap;
+      -webkit-justify-content: center;
+      -ms-flex-pack: center;
+      justify-content: center;
+      -webkit-align-content: center;
+      -ms-flex-line-pack: center;
+      align-content: center;
+      -webkit-align-items: center;
+      -ms-flex-align: center;
+      align-items: center;
+    }
+
+    .flex-item:nth-child(1) {
+      -webkit-order: 0;
+      -ms-flex-order: 0;
+      order: 0;
+      -webkit-flex: 0 1 auto;
+      -ms-flex: 0 1 auto;
+      flex: 0 1 auto;
+      -webkit-align-self: auto;
+      -ms-flex-item-align: auto;
+      align-self: auto;
+    }
+  </style>
+</head>
+
+<body class="flex-container">
+  <div class="flex-item">
+    <img class="smallscreen" src="balash_logo.min-compressor.svg" />
+  </div>
+</body>
+
+</html>
